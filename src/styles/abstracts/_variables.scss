@@ -1,0 +1,49 @@
+// ==========================
+// COLORS
+// ==========================
+
+// Primary & secondary theme colors
+$ptc: #333333;             // Primary text color
+$itc: #e3e1ec;             // Inverted text color
+$pbgc: #cdc4e0;            // Page background color
+$pc: #f9f8f9;              // Primary container background
+$pac: #b169fa3c;           // Accent border color
+
+$sbgc: #cbc4d6;            // Secondary background
+$sc: #beafd8;              // Secondary color
+$sac: #b169fa;             // Secondary accent
+$sach: #825ebd;            // Secondary accent (darkened)
+
+// Special-purpose colors
+$pshdc:rgba(55, 55, 55, 0.8); // Shadow base color
+$phighc: #a675f3;          // High priority color
+$pmodc: #d989ec;           // Moderate priority color
+$plowc: #f0b3e1;           // Low priority color
+$delete: #e28080;          // Delete color
+
+// ==========================
+// EFFECTS & SHADOWS
+// ==========================
+
+$stdshad: 1px 1px 2px $pshdc; // Standard drop shadow
+
+// ==========================
+// SIZING / SPACING / TYPOGRAPHY
+// ==========================
+$brdr: 12px;                 // Border radius for boxes
+$spd: 8px;                   // Small padding/margin
+$mpd: 32px;                  // Medium padding/margin
+$lpd: 64px;                  // Large padding/margin
+
+$sis: 40px;                  // Standard icon size
+
+$sftnts: 1.1rem;             // Standard font size (DESKTOP)
+$xftnts: 1.6rem;             // Large font size (DESKTOP)
+
+$msftnts: 1rem;               // Standard font size (HANDHELD)
+$mxftnts: 1.4rem;             // Large font size (HANDHELD)
+
+$pbrdr: 8px;                 // Primary border width
+$pcmaxw: 1920px;             // Page/container max width
+
+$breakpoints: ("handheld": 975px)

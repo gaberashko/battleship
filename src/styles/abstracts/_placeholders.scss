@@ -1,0 +1,30 @@
+@use "./variables" as *;
+
+// ==========================
+// DESIGN
+// ==========================
+
+%rounded {
+    border-radius: $brdr;
+}
+
+// ==========================
+// HEADING
+// ==========================
+
+%heading-base {
+    font-family: inherit;
+    font-weight: bold;
+    margin: 0 auto;
+    height: fit-content;
+    width: fit-content;
+}
+
+%heading-box {
+    @extend %rounded;
+
+    padding: $spd;
+    margin: $spd;
+    border-left: 5px solid $pac;
+    border-bottom: 5px solid $pac;
+}
