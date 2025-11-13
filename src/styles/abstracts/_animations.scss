@@ -1,0 +1,31 @@
+@use "variables" as *;
+
+@keyframes poweron {
+    0% {
+
+    }
+
+    50% {
+
+    }
+
+    100% {}
+}
+
+@keyframes blink {
+    0% {
+        visibility: visible;
+    }
+
+    50% {
+        visibility: hidden;
+    }
+
+    100% {
+        visibility: hidden;
+    }
+}
+
+%blinking {
+    animation: blink .6s steps(3) infinite alternate;
+}

@@ -1,4 +1,4 @@
-@use "../abstracts/variables" as *;
+@use "../abstracts/" as *;
 
 * {
     margin: 0;
@@ -6,11 +6,12 @@
     box-sizing: border-box;
     outline: none;
     border: none;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        color: $ptc;
-        line-height:1.5;
+    user-drag: none;
 
-        &::selection {
-            background-color: $pac;
-        }
+    &::selection {
+        background-color: $accentprim;
+        color: $accentsec;
+        text-shadow: $selectfontglow;
+    }
+    
 }

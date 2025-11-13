@@ -1,12 +1,14 @@
 @use "variables" as *;
+@use "sass:map";
 
-@mixin responsive($breakpoint) {
-    @if map-has-key($breakpoints, $breakpoint) {
-        $max-width: map-get($breakpoints, $breakpoint);
-        @media only screen and (max-width: $max-width) {
-            @content;
+@mixin responsive($property, $val-map) {
+    @each $break, $val in $val-map {
+        @if map.get($breakpoints, $break) == 0 {
+            #{$property}: $val
+        } @else {
+            @media (min-width: map.get($breakpoints, $break)) {
+                #{$property}: $val
+            }
         }
-    } @else {
-        @error "Invalid breakpoint: #{$breakpoint}.";
     }
 }

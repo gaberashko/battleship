@@ -1,0 +1,18 @@
+@use "../abstracts/" as *;
+
+
+input {
+    background: none;
+    caret-color: transparent;
+}
+
+div:has(input:focus) > .input__wrapper {
+    @extend %field_focus;
+}
+
+input, .input__wrapper {
+    display: block;
+    margin-left: $spd;
+    position: relative;
+    height:fit-content;
+}

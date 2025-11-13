@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch *.js",
+    "watch": "jest --watch *.ts",
     "deploy": "git subtree push --perfix dist origin main"
   },
   "repository": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/gaberashko/battleship#readme",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "css-loader": "^7.1.2",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.6.4",
@@ -28,6 +29,7 @@
     "mini-css-extract-plugin": "^2.9.4",
     "sass": "^1.93.2",
     "sass-loader": "^16.0.6",
+    "ts-jest": "^29.4.5",
     "ts-loader": "^9.5.4",
     "typescript": "^5.9.3",
     "webpack": "^5.102.1",

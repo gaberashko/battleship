@@ -1,0 +1,62 @@
+@use "../abstracts" as *;
+
+@font-face {
+    font-family: "Idealist Hacker Mono";
+    src: url(../assets/fonts/idealist-hacker-mono.woff);
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    font-family: "Idealist Hacker Mono", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: $accentprim;
+        text-shadow: $fontglow;
+        line-height:1.5;
+        letter-spacing: .1em;
+}
+
+
+h1, h2, h3, h4, h5, p, b, em, i, sub, sup, ul, ol, li {
+    position: relative;
+    cursor: default;
+    user-select:text;
+}
+
+h1 {
+    @include responsive(font-size, (xs:$xxlftnts));
+    @extend %underline;
+}
+
+h2 {
+    font-size: $xlftnts;
+}
+
+h3 {
+    font-size: $lftnts;
+}
+
+h4 {
+    font-size: $mftnts;
+}
+
+h5 {
+    font-size: $sftnts;
+
+}
+
+p  {
+    font-size: $xsftnts;
+}
+
+pre {
+    font-size: $prefnts;
+}
+
+u {
+    @extend %underline;
+}
+
+button {
+    font-size: $sftnts;
+}

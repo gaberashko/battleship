@@ -1,30 +1,67 @@
-@use "./variables" as *;
+@use "../abstracts/variables" as *;
+@use "../abstracts/animations" as *;
 
 // ==========================
 // DESIGN
 // ==========================
 
-%rounded {
-    border-radius: $brdr;
+%underline {
+    border-bottom: $dblborder;
+    box-shadow: 0 2px 2px -2px $accentprim;
 }
+
+%consoletext {
+    &::after {
+        display: inline-block;
+        content:"";
+        position: absolute;
+        bottom:0;
+        background-color: $accentprim;
+        width: 1ch;
+        padding-top:.5ch;
+        box-shadow: $fontglow;
+        @extend %blinking;
+    }
+}
+
+%button_focus {
+    &:hover, &:focus-visible {
+
+        &::after {
+            content: "";
+            display: block;
+            transform:rotate(45deg) translate(-80%, 0);
+            position: absolute;
+            top:50%;
+            right:100%;
+            width: 10px;
+            height: 10px;
+            border-right: $sldborder;
+            border-top: $sldborder;
+            @extend %blinking;
+        }
+    }
+}
+
+%field_focus {
+    &::after {
+        content: "";
+        display: block;
+        transform:rotate(45deg) translate(-80%, 0);
+        position: absolute;
+        top:50%;
+        right:100%;
+        width: 10px;
+        height: 10px;
+        border-right: $sldborder;
+        border-top: $sldborder;
+        @extend %blinking;
+    }
+}
+
 
 // ==========================
 // HEADING
 // ==========================
 
-%heading-base {
-    font-family: inherit;
-    font-weight: bold;
-    margin: 0 auto;
-    height: fit-content;
-    width: fit-content;
-}
 
-%heading-box {
-    @extend %rounded;
-
-    padding: $spd;
-    margin: $spd;
-    border-left: 5px solid $pac;
-    border-bottom: 5px solid $pac;
-}

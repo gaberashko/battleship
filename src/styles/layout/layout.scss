@@ -1,0 +1,20 @@
+ @use "../abstracts/" as *;
+ 
+* {
+    height: fit-content;
+}
+
+body {
+    @include responsive(padding, (xs: $spd $mpd));
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items:baseline;
+}
+
+section:not(:last-of-type) {
+    @include responsive(margin-bottom, (xs: $spd))
+}
+

@@ -14,9 +14,9 @@
       "styles/*": ["styles*"]
     },
     "target": "ES6",
-    "types": [],
+    "types": ["jest"],
     // For nodejs:
-    // "lib": ["esnext"],
+    "lib": ["ES2016", "DOM"],
     // "types": ["node"],
     // and npm install -D @types/node
 
@@ -40,10 +40,9 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-  }
+  },
 }

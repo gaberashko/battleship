@@ -1,88 +1,49 @@
-@use "../abstracts/variables" as *;
-@use "../abstracts/placeholders" as phs;
-@use "../abstracts/mixins";
+@use "../abstracts/" as *;
 
-html {
-    overflow-y:auto;
+body {
+    background-color: $bg-prim;
 }
 
-h1, h2, h3, h4 {
-    @extend %heading-base;
-}
+button {
+    position: relative;
 
-h1 {
-   @extend %heading-box;
-    font-size:2.4rem;
-    margin-top:17px;
-    margin-bottom:auto;
-
-    @include mixins.responsive("handheld") {
-        font-size: 2rem;
-        margin-top: 0;
+    &:hover, & *:hover{
+        cursor: pointer;
     }
+
 }
 
-h2 {
-    @extend %heading-box;
-    font-size: 2rem;
+button {
+    background: none;
+    @extend %button_focus;
+}
 
-    @include mixins.responsive("handheld") {
-        font-size: 1.6rem;
+li {
+    list-style-type:square;
+    list-style-position: inside;
+}
+
+.--console {
+    @extend %consoletext;
+}
+
+.--danger {
+    color: $danger--accentprim;
+    text-shadow: $danger--fontglow;
+
+    &::selection {
+        color: $danger--accentsec;
+        text-shadow: $danger--selectfontglow
     }
+
 }
 
-h3 {
-    font-size: 1.8rem;
-    border-bottom: 2px solid $pbgc;
+.--miss {
+    color: $miss--accentprim;
+    text-shadow: $miss--fontglow;
 
-    @include mixins.responsive("handheld") {
-        font-size: 1.4rem;
+    &::selection {
+        color: $miss--accentsec;
+        text-shadow: $miss--selectfontglow
     }
-}
-
-h4 {
-    font-size:1.4rem;
-
-    @include mixins.responsive("handheld") {
-        font-size: 1rem;
-    }
-}
-
-label {
-    display: block;
-    font-size: $sftnts;
-
-    @include mixins.responsive("handheld") {
-        font-size: $msftnts;
-    }
-}
-
-input {
-    margin-right: $spd;
-
-    &[type="text"], &[type="date"] {
-        @extend %rounded;
-
-        padding: $spd;
-        border: 1px solid $itc;
-        width: 150px;
-
-        &:focus {
-            filter: brightness(.98);
-            border: 1px solid black;
-        }
-    }
-}
-
-form {
-    & > * {
-        display: inline-block;
-    }
-}
-
-select {
-    @extend %rounded;
-
-    background-color: white;
-    padding: $spd;
 }

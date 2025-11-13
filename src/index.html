@@ -6,5 +6,206 @@
         <title>Battleship</title>
         <link rel="stylesheet" href="style.css" />
     </head>
-    <body></body>
+    <body>
+        <header>
+            <h1>Battleship</h1>
+            <button id="header__help">Help</button>
+        </header>
+        <main>
+            <section>
+                <br />> <br />>
+                <h4 class="--console">Choose your opponent:</h4>
+            </section>
+            <section>
+                <button class="main__button" id="ai_btn">
+                    <pre>
+                                                  
+           @#%       @#@  @#@       %#%           
+           %*%       %*%  %*%       #*%           
+            #         %    %         #            
+            @@@@@%#   @    @   #%%@@%@            
+                 #*   @    @   *#                 
+  @#%*#*         #=   %    %   =#         *#*%#%  
+  @#%  -@    @%@@%%@@@%%@@%%%@@%%%@%@    %:  %#%  
+       :%    #                      #    #:       
+       +%@@@%%   @@@@@@@@@@@@@@%@  .@%@@%%+       
+             %   %              %                 
+  *%%        %   @            @ @   @        %#*  
+  @=%@@@@@@@%%   @            @ @   %%@@@@@@%%=@  
+             #                @ @   #             
+  @+%@@@@@@@%%   @              @   %#@@@@@@%%+@  
+  #%%        %   @              @   %        %#*  
+             %   %              %   %             
+       +%%@@%%   @%@@@@@@@@@@@@%@   %%@@%%=       
+       :#    #                      #    #.       
+  %#%  -@    @%@%%%%@%%%@@%%%@%%%%@%@    %:  %#%  
+  %#%##*         *=   %    %   -*        .***%*%  
+                 #*   @    @   *#                 
+            @%@@%%#   @    @   #%%@@%@            
+            #         %    %         *            
+           %*#       %*#  #*%       #*#           
+           %#%       %#%  %#%       %*%           
+                                                  
+</pre
+                    >
+                    AI
+                </button>
+                <button class="main__button" id="human_btn">
+                    <pre>
+                    .:=*=*=*=*=*=:.                    
+                  .=#@@@@@@@@@@@@@#=.                  
+                .:%@@@@@@@@@@@@@@@@@%:.                
+               .-%@@@@@@@@@@@@@@@@@@@%-.               
+               :#@@@@@@@@@@@@@@@@@@@@@%:.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@*.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@#.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@#.              
+               =%@@@@@@@@@@@@@@@@@@@@@@=               
+               .*@@@@@@@@@@@@@@@@@@@@@*.               
+                .+@@@@@@@@@@@@@@@@@@@*.                
+                  -#@@@@@@@@@@@@@@@#-                  
+                .....#@@@@@@@@@@@#....                 
+               .-%@=..    ...    ..=@%-..              
+            .:*@@@@@@@%*-.....-*%@@@@@@@*:.            
+          ..+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*..          
+         .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.         
+        .=%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=.        
+       .-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.       
+       .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*..      
+      .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=.      
+      .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.      
+     .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.     
+     .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.     
+     .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.     
+     .-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#-.     
+      ..=#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#=..      
+</pre
+                    >
+                    Human
+                </button>
+            </section>
+        </main>
+        <div class="overlay" id="overlay">
+            <div class="overlay__modal --hidden" id="rules">
+                <div class="modal__header">
+                    <h4>How to play:</h4>
+                    <button id="modal__exit">X</button>
+                </div>
+                <div class="modal__body">
+                    <div class="modal__section">
+                        <h5><u>Objective</u>:</h5>
+                        <ul>
+                            <li>
+                                Be the first to sink all 5 of your opponent's
+                                ships!
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Ship Placement</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player begins by placing 5 ships on the
+                                board.
+                            </li>
+                            <li>
+                                Ships can be placed horizontally or vertically
+                            </li>
+                            <li>
+                                Ships cannot overlap nor be placed outside of
+                                the board.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Naval Combat</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player takes turns attacking a coordinate
+                                on the board.
+                            </li>
+                            <li>
+                                If an opponent's ship is hit, the cell will turn
+                                <span class="--danger">red</span>.
+                            </li>
+                            <li>
+                                If an attack misses, the cell will turn
+                                <span class="--miss">white</span>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay__modal" id="start">
+                <div class="modal__header">
+                    <h4>Prepare to fight:</h4>
+                    <button id="modal__exit">X</button>
+                </div>
+                <div class="modal__body">
+                    <div class="modal__section">
+                        <form action="" class="modal__form">
+                            <div class="modal__input">
+                                <label for="input_name1">
+                                    <h5><u>Enter your name</u>:</h5>
+                                </label>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="text"
+                                        name="name1"
+                                        id="input_name1"
+                                    />
+                                </div>
+                            </div>
+                            <div class="modal__input">
+                                <label for="input_name1">
+                                    <h5><u>Enter your name</u>:</h5>
+                                </label>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="text"
+                                        name="name1"
+                                        id="input_name1"
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Ship Placement</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player begins by placing 5 ships on the
+                                board.
+                            </li>
+                            <li>
+                                Ships can be placed horizontally or vertically
+                            </li>
+                            <li>
+                                Ships cannot overlap nor be placed outside of
+                                the board.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Naval Combat</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player takes turns attacking a coordinate
+                                on the board.
+                            </li>
+                            <li>
+                                If an opponent's ship is hit, the cell will turn
+                                <span class="--danger">red</span>.
+                            </li>
+                            <li>
+                                If an attack misses, the cell will turn
+                                <span class="--miss">white</span>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
