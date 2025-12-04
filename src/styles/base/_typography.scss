@@ -1,5 +1,9 @@
 @use "../abstracts" as *;
 
+:root {
+    --cursor-default: "grabbing";
+}
+
 @font-face {
     font-family: "Idealist Hacker Mono";
     src: url(../assets/fonts/idealist-hacker-mono.woff);
@@ -11,42 +15,41 @@
 * {
     font-family: "Idealist Hacker Mono", 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         color: $accentprim;
-        text-shadow: $fontglow;
+        text-shadow: $glow $glow-color;
         line-height:1.5;
         letter-spacing: .1em;
 }
 
 
-h1, h2, h3, h4, h5, p, b, em, i, sub, sup, ul, ol, li {
+h1, h2, h3, h4, h5, p, b, em, i, sub, sup, ul, ol, li, legend {
     position: relative;
-    cursor: default;
+    cursor: var(--cursor-default);
     user-select:text;
 }
 
 h1 {
-    @include responsive(font-size, (xs:$xxlftnts));
+    @include responsive(font-size, (xs:$mfnts, sm: $xlfnts, md: $xxlfnts));
     @extend %underline;
 }
 
 h2 {
-    font-size: $xlftnts;
+    @include responsive(font-size, (xs:$xlfnts, sm: $xlfnts));
 }
 
 h3 {
-    font-size: $lftnts;
+    @include responsive(font-size, (xs:$xsfnts, md: $sfnts));
 }
 
 h4 {
-    font-size: $mftnts;
+    font-size:$mfnts;
 }
 
-h5 {
-    font-size: $sftnts;
-
+h5, legend {
+    @include responsive(font-size, (xs:$xsfnts, sm: $sfnts));
 }
 
-p  {
-    font-size: $xsftnts;
+p, li  {
+    @include responsive(font-size, (xs:$xxsfnts));
 }
 
 pre {
@@ -58,5 +61,5 @@ u {
 }
 
 button {
-    font-size: $sftnts;
+    @include responsive(font-size, (xs:$xsfnts, sm: $sfnts, md: $mfnts));
 }

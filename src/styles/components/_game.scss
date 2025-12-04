@@ -1,0 +1,413 @@
+@use "../abstracts" as *;
+
+$status-width: 16ch;
+
+.main__game {
+    display: flex;
+    margin-top: $spd;
+    @include responsive(gap, (xs: $xspd, sm: $spd));
+    @include responsive(flex-direction, (xs: column, sm: column, md: row));
+    @include responsive(align-items, (xs: start, md: center));
+}
+
+.ship__container {
+
+}
+
+.ship__unit {
+    cursor: grab;
+    position: relative;
+    width:fit-content;
+    user-select:none;
+    text-wrap: nowrap;
+    font-size: 0;
+    transform-origin: top left;
+    grid-column: span 3;
+    @extend %ship;
+
+    &:hover:not(:active) {
+        @extend %button_focus;
+    }
+
+    &:active {
+        cursor:grabbing;
+    }
+
+    & > * {
+        display: inline-block;
+        @include responsive(width, (xs:$sgrid, sm:$sgrid, md:$sgrid));
+        @include responsive(height, (xs:$sgrid, sm:$sgrid, md:$sgrid));
+    }
+
+    & > [class$="-head"]::after {
+        top:5%;
+    }
+
+    &.--vertical {
+        transform:rotate(90deg);
+    }
+
+    &.--dragging {
+        filter:opacity(.5);
+    }
+
+    & .board__cell {
+        border:none;
+        width: 100%;
+        height:100%;
+    }
+
+    &--vertical {
+        @extend .ship__unit;
+        grid-row: span 4;
+        grid-column: span 1;
+    }
+
+}
+
+.game__board {
+    display: grid;
+    @include responsive(grid-template-rows, (xs: repeat(11, $sgrid), md: repeat(11, $mgrid), lg: repeat(11, $lgrid)));
+    @include responsive(grid-template-columns, (xs: repeat(11, 30px), md: repeat(11, $mgrid), lg: repeat(11, $lgrid)));
+}
+
+.game__status {
+    min-width:31ch;
+    h5 {
+        text-overflow: ellipsis;
+        max-width:31ch;
+
+        &.--typing {
+            font-smooth: never;
+        }
+    }
+}
+
+.board__cell {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    opacity:1;
+    border-right: $accentprim $dotborder;
+    border-bottom: $accentprim $dotborder;
+    user-select:none;
+    transition: text-shadow, background-color 2s cubic-bezier(0.215, 0.610, 0.355, 1);
+
+    &::after {
+        content:"";
+        position: absolute;
+    }
+
+    &.--targetable {
+
+        &::after {
+            background: url('../assets/images/target.svg') center/100% no-repeat;
+            visibility: hidden;
+            height:80%;
+            width:80%;
+            transform-origin: center;
+            animation: rotate 2s linear infinite,
+            focus .5s cubic-bezier(0.895, 0.03, 0.685, 0.22) infinite alternate;
+        }
+        
+        &:hover, &:focus-visible {
+            cursor: pointer;
+            background:radial-gradient(rgba($accentprim, .3) 10%, transparent);
+
+            &::after {
+                visibility: visible;
+            }
+        }
+
+        &:active {
+            background:radial-gradient(rgba($danger--accentprim, .3) 10%, transparent);
+            &::after {
+                animation: rotate 2s linear infinite;
+                filter: hue-rotate(-110deg) saturate(7);
+            }
+        }
+    }
+
+    &.--attack {
+        vertical-align: middle;
+        font-size:$mfnts;
+
+        &::after {
+            animation: pulse 3s cubic-bezier( 0.97, 0.05, 0.91, 0.97 ) infinite alternate;
+            height:100%;
+            width:100%;
+            filter:drop-shadow($glow);
+        }
+
+        &:hover {
+            transition: text-shadow, background-color .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+        
+        &.--hit {
+            @extend .--attack;
+            
+            &::after {
+                background: url("../assets/images/attack-hit.svg") 50% 50% / 60% 60% no-repeat;
+            }
+        }
+
+        &.--miss {
+            @extend .--attack;
+
+            &::after {
+                color: $accentprim;
+                filter:drop-shadow($accentprim $glow);
+                background: url("../assets/images/attack-miss.svg") 50% 50% / 55% 55% no-repeat;
+            }
+
+            &:hover {
+                background-color: rgba($bg-glassy, .6);
+            }
+        }
+
+        &.--sunk {
+            @extend .--attack;
+
+            &::after {
+                filter:drop-shadow($sunk--accentprim $glow);
+                background: url("../assets/images/attack-sunk-copy.svg") 50% 50% / 60% 60% no-repeat;
+            }
+
+            &:hover {
+                background-color: rgba($sunk--accentprim, .3);
+            }
+        }
+
+        &ing {
+            @extend .--attack;
+            &::after {
+                animation: blink .4s 3,
+                pulse 3s cubic-bezier( 0.97, 0.05, 0.91, 0.97 ) infinite alternate !important;
+            }
+        }
+    }
+
+    &:not(.--placement).--ship {
+        @extend %ship;
+       
+        &:hover {
+            background-color: rgba($bg-glassy, .6);
+            transition: text-shadow, background-color .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        &::after {
+            content:"";
+            position: absolute;
+            height:100%;
+            width: 100%;
+            visibility: visible;
+        }
+
+        &.--placeable {
+            cursor: grab;
+        }
+
+        &-y {
+            @extend .--ship;
+
+            &-head {
+                @extend .--ship-y;
+                border-bottom: none;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/50% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                }
+            }
+
+            &-body {
+                @extend .--ship-y;
+                border-bottom: none;
+                &::after {
+                    height:102%;
+                    background: linear-gradient($accentprim) 50% 50% / 50% 100% no-repeat,
+                    radial-gradient(ellipse at 50% 50%, rgba($accentprim, .4) 0, transparent 60%) 50% 50% / 100% 400% no-repeat;
+                }
+            }
+
+            &-tail {
+                @extend .--ship-y;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/50% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                    transform:rotate(180deg);
+                }
+            }
+        }
+
+
+        &-x {
+            @extend .--ship;
+            transform:rotate(-90deg);
+            border-right: none;
+            border-left: $accentprim $dotborder;
+
+            &-head {
+                @extend .--ship-x;
+                border-bottom:none;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/49% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                }
+            }
+                        
+
+            &-body {
+                @extend .--ship-x;
+
+                border-bottom:none;
+                &::after {
+                    height:105%;
+                    background: linear-gradient($accentprim) 50% 50% / 50% 100% no-repeat,
+                    radial-gradient(ellipse at 50% 50%, rgba($accentprim, .4) 0, transparent 60%) 50% 50% / 100% 400% no-repeat;
+                }
+            }
+
+            &-tail {
+                @extend .--ship-x;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/49% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                    transform:rotate(180deg);
+                }
+            }
+        }
+    }
+
+    &.--hit {
+            transition: background-color 2s cubic-bezier(0.215, 0.610, 0.355, 1);
+            color: $danger--accentprim;
+            text-shadow: $danger--accentprim $glow;
+                    
+            &:hover {
+                background-color: rgba($danger--accentprim, .2);
+            }
+
+            &::after {
+                animation: blurpulse 1s linear infinite alternate;
+            }
+        }
+
+    &.--sunk {
+        color: $sunk--accentprim;
+        transition: background-color 2s cubic-bezier(0.215, 0.610, 0.355, 1);
+                
+        &:hover {
+            background-color: rgba($sunk--accentprim, .3);
+        }
+
+        &::after {
+            filter: saturate(0) brightness(.6);
+        }
+    }
+
+    &.--top {
+        mask:linear-gradient(180deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        border-top:none;
+    }
+
+    &.--right {
+        border-right:none;
+
+        &:not(.cell__label) {
+            mask:linear-gradient(-90deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        }
+
+        &.--ship-x-tail {
+            border-bottom: none;
+        }
+
+        &.--ship-x-tail:not(.--bottom) {
+            mask: linear-gradient(0deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        }
+    }
+
+    &.--bottom {
+        &:not(.--right[class*="ship-y"]) {
+            border-bottom:none;
+        }
+        
+        &:not(.cell__label) {
+            mask:linear-gradient(0deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        }
+
+        &.--ship {
+            border-left: none;
+            mask:linear-gradient(90deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        }
+
+        &.--ship-x-tail:not(.--right) {
+            border-bottom: $accentprim $dotborder;
+        }
+
+        &.--ship-y-tail {
+            mask:linear-gradient(0deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        }
+
+        &.--right.--ship-y-tail {
+            border-bottom: none;
+        }
+
+        &.--ship-x-tail.--right {
+            border-bottom: none;
+        }
+    }
+
+    &.--left {
+        mask:linear-gradient(90deg, rgba($bg-glassy, .2) 0, rgba($bg-glassy, 1) 20%);
+        border-left:none;
+    }
+
+    &.--placement {
+
+        &.--vertical::after {
+            transform:rotate(90deg);
+        }
+
+        &.--head::after {
+            content:"<";
+        }
+
+        &.--body::after {
+            content:"=";
+        }
+
+        &.--tail::after {
+            content:">";
+        }
+
+        &-valid {
+            @extend .--placement;
+            background-color: rgba($accentprim, .3);
+            color:$accentprim;
+            text-shadow: $accentprim $glow;
+            
+        }
+
+        &-invalid {
+            @extend .--placement;
+            background-color: rgba($danger--accentprim, .2);
+            color: $danger--accentprim;
+            text-shadow: $danger--accentprim $glow;
+            
+        }
+    }
+
+}
+
+.cell__label:not(:first-of-type) {
+    background-color: rgba($bg-glassy, .3);
+    text-align: center;
+    vertical-align: middle;
+
+    &:hover {
+        filter: brightness(1.2) saturate(1.2);
+        background-color: rgba($bg-glassy, .8);
+        text-shadow: $accentprim 0 0 3px;
+        transition: text-shadow, filter, background-color .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+    }
+}
+

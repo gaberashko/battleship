@@ -51,6 +51,11 @@ class Player {
         }
     }
 
+    /*
+    1.) rebuild ship unit html above the involved cells, position
+    2.) build a wrapper around involved cells, make that wrapper a ship__unit
+    and then do some magic shit
+    */
     // Attempts to place a ship on the GameBoard. Returns a boolean indicating if it was successful.
     public placeShip(
         shipName: string,
@@ -74,7 +79,7 @@ class Player {
     public attack(board: GameBoard, coords?: NumberPair): attackResult {
         let targetCoords: NumberPair;
         // If the instance is an AI, come up with coordinates to attack.
-        if (!this.isHuman) {
+        if (!this.isHuman && !coords) {
             targetCoords = this.getAttack();
         } else {
             // Instance is a player, so coords will be passed from DOM.
@@ -247,12 +252,12 @@ class Player {
 
     // Hash a coordinate to a number for storage.
     private coordToKey([x, y]: NumberPair): number {
-        return x * this.board.size + y;
+        return y * this.board.size + x;
     }
 
     // Retrieve the coordinate from a number hash.
     private keyToCoord(key: number): NumberPair {
-        return [Math.floor(key / this.board.size), key % this.board.size];
+        return [key % this.board.size, Math.floor(key / this.board.size)];
     }
 }
 

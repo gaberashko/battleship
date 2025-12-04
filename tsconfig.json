@@ -7,13 +7,14 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "baseUrl": "src",
     "paths": {
-      "styles/*": ["styles*"]
+      "styles/*": ["styles*"],
+      "assets/*": ["assets*"]
     },
-    "target": "ES6",
+    "target": "es2017",
     "types": ["jest"],
     // For nodejs:
     "lib": ["ES2016", "DOM"],

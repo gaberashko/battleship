@@ -10,11 +10,16 @@ type GameState = {
 };
 
 interface Renderer {
-    renderBoard(state: GameState): void;
-    showAttackResults(result: attackResult): void;
+    renderBoard(
+        player: Player,
+        hideShips?: boolean,
+        callbacks?: (...arg: any) => any
+    ): void;
+    renderAttack(state: GameState): void;
     displayGameOver(): void;
 }
 
+const [SHIPS_HIDDEN, SHIPS_VISIBLE] = [true, false];
 const AI_ATTACK_DELAY: number = 1000;
 
 class GameController {
@@ -23,9 +28,15 @@ class GameController {
     public constructor(
         private player1: Player,
         private player2: Player,
-        private renderer: Renderer
+        private renderer?: Renderer
     ) {
         this.state = this.initializeGameState();
+        this.renderer?.renderBoard(player1, SHIPS_HIDDEN, (coords) =>
+            this.attack(player2.board, coords)
+        );
+        this.renderer?.renderBoard(player2, SHIPS_VISIBLE, (coords) =>
+            this.attack(player1.board, coords)
+        );
     }
 
     // Getter function for the current state of the game.
@@ -34,9 +45,17 @@ class GameController {
     }
 
     // Attack the coordinates passed, or if AI, generate coordinates.
-    public async attack(
-        coords?: [number, number]
-    ): Promise<attackResult | null> {
+    public attack(board?: GameBoard, coords?: [number, number]): void {
+        let result = this.state.curPlayer.attack(
+            board ? board : this.state.oppPlayer.board,
+            coords
+        );
+        if (result) {
+            this.state.attackResult = result;
+            this.renderer?.renderAttack(this.state);
+            this.renderer?.renderBoard(this.state.oppPlayer, SHIPS_VISIBLE);
+        }
+        /*
         if (!this.state.curPlayer.isHuman) {
             await delay(AI_ATTACK_DELAY);
             return this.state.curPlayer.attack(this.state.oppPlayer.board);
@@ -45,7 +64,7 @@ class GameController {
                 this.state.oppPlayer.board,
                 coords
             );
-        }
+        }*/
     }
 
     // INTERNAL FUNCTIONS
@@ -83,5 +102,5 @@ function delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export { GameController };
+export { GameController, SHIPS_HIDDEN, SHIPS_VISIBLE };
 export type { GameState, Renderer };

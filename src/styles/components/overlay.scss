@@ -19,7 +19,7 @@ $blur: 4px;
         @include responsive(height, (xs: 90%, sm: 500px, md: 500px));
         @include responsive(width, (xs:300px, sm: 500px, md: 800px));
         @include responsive(padding, (xs: $xspd, sm: $spd));
-        border: $dblborder;
+        border: $dblborder $accentprim;
     }
 }
 
@@ -31,19 +31,19 @@ $blur: 4px;
     justify-content: center;
     align-items: center;
     height:100vh;
-    width:100vw;
+    width:calc(100vw);
     background-color: rgba($accentsec, .6);
     transition: width $anim_fluid;
     backdrop-filter: blur($blur);
 
     &__modal {
-        @include responsive(height, (xs: 90%, sm: 95%, md: 95%));
-        @include responsive(width, (xs:300px, sm: 500px, md: 800px));
+        @include responsive(height, (xs: 90%, sm: 95%, md: 95%, xl: 60%));
+        @include responsive(width, (xs:320px, sm: 500px, md: 800px));
         @include responsive(padding, (xs: $xspd, sm: $spd));
         overflow-y:auto;
         opacity: 1;
         background-color: $bg-prim;
-        border: $dblborder;
+        border: $dblborder $accentprim;
         transition: width, height, padding, $anim_fluid;
         scrollbar-width: none;
 
@@ -59,7 +59,7 @@ $blur: 4px;
         display: flex;
         row-gap: $lpd;
         justify-content:space-between;
-        margin-bottom: $mpd;
+        margin-bottom: $spd;
 
         & #modal__exit {
             display: block;
@@ -80,6 +80,23 @@ $blur: 4px;
         &:last-of-type li:last-child::after {
             @extend %consoletext;
         }
+    }
+
+    .modal__form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .modal__input:not(:last-child) {
+        margin-bottom: $mpd;
+    }
+    
+    .modal__button {
+        width: fit-content;
+        align-self:center;
+        margin-top:$lpd;
+        justify-self:end;
     }
 
     &.--hidden {
@@ -124,6 +141,10 @@ $blur: 4px;
                 color: transparent;
                 text-shadow: none;
             }
+        }
+
+        input[type="text"] {
+            content: "";
         }
     }
 }

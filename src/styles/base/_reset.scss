@@ -11,7 +11,7 @@
     &::selection {
         background-color: $accentprim;
         color: $accentsec;
-        text-shadow: $selectfontglow;
+        text-shadow: $glow $glow-color--select;
     }
     
 }

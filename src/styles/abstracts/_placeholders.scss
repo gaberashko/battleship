@@ -6,27 +6,26 @@
 // ==========================
 
 %underline {
-    border-bottom: $dblborder;
+    border-bottom: $dblborder $accentprim;
     box-shadow: 0 2px 2px -2px $accentprim;
 }
 
 %consoletext {
     &::after {
-        display: inline-block;
+        display: inline;
         content:"";
         position: absolute;
         bottom:0;
         background-color: $accentprim;
         width: 1ch;
         padding-top:.5ch;
-        box-shadow: $fontglow;
+        box-shadow: $glow $glow-color;
         @extend %blinking;
     }
 }
 
 %button_focus {
     &:hover, &:focus-visible {
-
         &::after {
             content: "";
             display: block;
@@ -36,8 +35,9 @@
             right:100%;
             width: 10px;
             height: 10px;
-            border-right: $sldborder;
-            border-top: $sldborder;
+            border-right: $sldborder $accentprim;
+            border-top: $sldborder $accentprim;
+
             @extend %blinking;
         }
     }
@@ -53,9 +53,90 @@
         right:100%;
         width: 10px;
         height: 10px;
-        border-right: $sldborder;
-        border-top: $sldborder;
+        border-right: $sldborder $accentprim;
+        border-top: $sldborder $accentprim;
         @extend %blinking;
+    }
+}
+
+%ship {
+    .--ship {
+        &:hover {
+            transition: text-shadow, background-color .2s cubic-bezier(0.215, 0.610, 0.355, 1);
+        }
+
+        &::after {
+            content:"";
+            position: absolute;
+            height:100%;
+            width: 100%;
+            visibility: visible;
+        }
+
+        &.--placeable {
+            cursor: grab;
+        }
+
+        &-y {
+            @extend .--ship;
+
+            &-head {
+                @extend .--ship-y;
+
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/50% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                }
+            }
+
+            &-body {
+                @extend .--ship-y;
+
+                &::after {
+                    height:102%;
+                    background: linear-gradient($accentprim) 50% 50% / 50% 100% no-repeat,
+                    radial-gradient(ellipse at 50% 50%, rgba($accentprim, .4) 0, transparent 60%) 50% 50% / 100% 400% no-repeat;
+                }
+            }
+
+            &-tail {
+                @extend .--ship-y;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/50% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                    transform:rotate(180deg);
+                }
+            }
+        }
+
+        &-x {
+            @extend .--ship;
+            transform:rotate(-90deg);
+
+            &-head {
+                @extend .--ship-x;
+                
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/49% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                }
+            }
+
+            &-body {
+                @extend .--ship-x;
+                
+                &::after {
+                    height:105%;
+                    background: linear-gradient($accentprim) 50% 50% / 50% 100% no-repeat,
+                    radial-gradient(ellipse at 50% 50%, rgba($accentprim, .4) 0, transparent 60%) 50% 50% / 100% 400% no-repeat;
+                }
+            }
+
+            &-tail {
+                @extend .--ship-x;
+                &::after {
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/48% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                    transform:rotate(180deg);
+                }
+            }
+        }
     }
 }
 

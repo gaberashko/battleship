@@ -4,14 +4,23 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.ts",
+    entry: { index: "./src/index.ts", game: "./src/game.ts" },
     output: {
-        filename: "main.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "dist"),
         clean: true,
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: "./src/index.html" }),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "index.html",
+            chunks: ["index"],
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/game.html",
+            filename: "game.html",
+            chunks: ["game"],
+        }),
         new MiniCssExtractPlugin(),
     ],
     module: {
@@ -22,7 +31,7 @@ module.exports = {
             },
             { test: /\.html$/i, loader: "html-loader" },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|mp3)$/i,
                 type: "asset/resource",
             },
             {
@@ -41,6 +50,10 @@ module.exports = {
     },
     devtool: "eval-source-map",
     devServer: {
-        watchFiles: ["./src/index.html", "./src/ts/*"],
+        open: ["game.html"],
+        watchFiles: ["./src/game.html", "./src/ts/*"],
+    },
+    experiments: {
+        topLevelAwait: true,
     },
 };

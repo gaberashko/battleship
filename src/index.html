@@ -9,7 +9,7 @@
     <body>
         <header>
             <h1>Battleship</h1>
-            <button id="header__help">Help</button>
+            <button id="header__help_btn">Help</button>
         </header>
         <main>
             <section>
@@ -129,8 +129,7 @@
                                 <span class="--danger">red</span>.
                             </li>
                             <li>
-                                If an attack misses, the cell will turn
-                                <span class="--miss">white</span>.
+                                If an attack misses, a green ring will appear.
                             </li>
                         </ul>
                     </div>
@@ -143,69 +142,77 @@
                     <button id="modal__exit">X</button>
                 </div>
                 <div class="modal__body">
-                    <div class="modal__section">
-                        <form action="" class="modal__form">
-                            <div class="modal__input">
-                                <label for="input_name1">
-                                    <h5><u>Enter your name</u>:</h5>
-                                </label>
+                    <form action="" class="modal__form">
+                        <div class="modal__input" id="player1">
+                            <label for="input_name1">
+                                <h5><u>Player one's name</u>:</h5>
+                            </label>
+                            <div class="input__wrapper">
+                                <input
+                                    type="text"
+                                    name="name1"
+                                    id="input_name1"
+                                    autocomplete="off"
+                                />
+                            </div>
+                        </div>
+                        <div class="modal__input" id="player2">
+                            <label for="input_name2">
+                                <h5><u>Player two's name</u>:</h5>
+                            </label>
+                            <div class="input__wrapper">
+                                <input
+                                    type="text"
+                                    name="name2"
+                                    id="input_name2"
+                                    autocomplete="off"
+                                />
+                            </div>
+                        </div>
+                        <div class="modal__input" id="difficulty">
+                            <h5><u>Select difficulty</u>:</h5>
+                            <fieldset>
                                 <div class="input__wrapper">
                                     <input
-                                        type="text"
-                                        name="name1"
-                                        id="input_name1"
-                                    />
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_easy"
+                                        value="easy"
+                                    /><label for="difficulty_easy">Easy</label>
                                 </div>
-                            </div>
-                            <div class="modal__input">
-                                <label for="input_name1">
-                                    <h5><u>Enter your name</u>:</h5>
-                                </label>
                                 <div class="input__wrapper">
                                     <input
-                                        type="text"
-                                        name="name1"
-                                        id="input_name1"
-                                    />
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_medium"
+                                        value="medium"
+                                        class="--warn"
+                                    /><label
+                                        for="difficulty_medium"
+                                        class="--warn"
+                                        >Medium</label
+                                    >
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal__section">
-                        <h5><u>Ship Placement</u>:</h5>
-                        <ul>
-                            <li>
-                                Each player begins by placing 5 ships on the
-                                board.
-                            </li>
-                            <li>
-                                Ships can be placed horizontally or vertically
-                            </li>
-                            <li>
-                                Ships cannot overlap nor be placed outside of
-                                the board.
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="modal__section">
-                        <h5><u>Naval Combat</u>:</h5>
-                        <ul>
-                            <li>
-                                Each player takes turns attacking a coordinate
-                                on the board.
-                            </li>
-                            <li>
-                                If an opponent's ship is hit, the cell will turn
-                                <span class="--danger">red</span>.
-                            </li>
-                            <li>
-                                If an attack misses, the cell will turn
-                                <span class="--miss">white</span>.
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_hard"
+                                        value="hard"
+                                        class="--danger"
+                                    /><label
+                                        for="difficulty_hard"
+                                        class="--danger"
+                                        >Hard</label
+                                    >
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button class="modal__button">Start</button>
+                    </form>
                 </div>
             </div>
         </div>
+        <script src="./index.ts"></script>
     </body>
 </html>

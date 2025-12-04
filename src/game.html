@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Battleship</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>Battleship</h1>
+            <button id="header__help_btn">Help</button>
+        </header>
+        <main>
+            <div class="main__game">
+                <!-- SHIP CONTAINER -->
+                <div class="ship__container">
+                    <h5>Your fleet:</h5>
+                    <div
+                        class="ship__unit --placeable --horizontal"
+                        draggable=""
+                        data-name="carrier"
+                        data-length="5"
+                        data-orientation="horizontal"
+                    >
+                        <div class="--ship-x-head"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-tail"></div>
+                    </div>
+                    <div
+                        class="ship__unit --placeable --horizontal"
+                        draggable=""
+                        data-name="battleship"
+                        data-length="4"
+                        data-orientation="horizontal"
+                    >
+                        <div class="--ship-x-head"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-tail"></div>
+                    </div>
+                    <div
+                        class="ship__unit --placeable --horizontal"
+                        draggable=""
+                        data-name="cruiser"
+                        data-length="3"
+                        data-orientation="horizontal"
+                    >
+                        <div class="--ship-x-head"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-tail"></div>
+                    </div>
+                    <div
+                        class="ship__unit --placeable --horizontal"
+                        draggable=""
+                        data-name="submarine"
+                        data-length="3"
+                        data-orientation="horizontal"
+                    >
+                        <div class="--ship-x-head"></div>
+                        <div class="--ship-x-body"></div>
+                        <div class="--ship-x-tail"></div>
+                    </div>
+                    <div
+                        class="ship__unit --placeable --horizontal"
+                        draggable=""
+                        data-name="destroyer"
+                        data-length="2"
+                        data-orientation="horizontal"
+                    >
+                        <div class="--ship-x-head"></div>
+                        <div class="--ship-x-tail"></div>
+                    </div>
+                </div>
+                <div class="game__board" data-name="a">
+                    <div class="board__cell cell__label --top --left"></div>
+                    <div class="board__cell cell__label --top">1</div>
+                    <div class="board__cell cell__label --top">2</div>
+                    <div class="board__cell cell__label --top">3</div>
+                    <div class="board__cell cell__label --top">4</div>
+                    <div class="board__cell cell__label --top">5</div>
+                    <div class="board__cell cell__label --top">6</div>
+                    <div class="board__cell cell__label --top">7</div>
+                    <div class="board__cell cell__label --top">8</div>
+                    <div class="board__cell cell__label --top">9</div>
+                    <div class="board__cell cell__label --top --right">10</div>
+                    <div class="board__cell cell__label --left">A</div>
+                    <div class="board__cell" data-cell="0" tabindex="0"></div>
+                    <div class="board__cell" data-cell="1" tabindex="0"></div>
+                    <div class="board__cell" data-cell="2" tabindex="0"></div>
+                    <div class="board__cell" data-cell="3" tabindex="0"></div>
+                    <div class="board__cell" data-cell="4" tabindex="0"></div>
+                    <div class="board__cell" data-cell="5" tabindex="0"></div>
+                    <div class="board__cell" data-cell="6" tabindex="0"></div>
+                    <div class="board__cell" data-cell="7" tabindex="0"></div>
+                    <div class="board__cell" data-cell="8" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="9"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">B</div>
+                    <div class="board__cell" data-cell="10" tabindex="0"></div>
+                    <div class="board__cell" data-cell="11" tabindex="0"></div>
+                    <div class="board__cell" data-cell="12" tabindex="0"></div>
+                    <div class="board__cell" data-cell="13" tabindex="0"></div>
+                    <div class="board__cell" data-cell="14" tabindex="0"></div>
+                    <div class="board__cell" data-cell="15" tabindex="0"></div>
+                    <div class="board__cell" data-cell="16" tabindex="0"></div>
+                    <div class="board__cell" data-cell="17" tabindex="0"></div>
+                    <div class="board__cell" data-cell="18" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="19"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">C</div>
+                    <div class="board__cell" data-cell="20" tabindex="0"></div>
+                    <div class="board__cell" data-cell="21" tabindex="0"></div>
+                    <div class="board__cell" data-cell="22" tabindex="0"></div>
+                    <div class="board__cell" data-cell="23" tabindex="0"></div>
+                    <div class="board__cell" data-cell="24" tabindex="0"></div>
+                    <div class="board__cell" data-cell="25" tabindex="0"></div>
+                    <div class="board__cell" data-cell="26" tabindex="0"></div>
+                    <div class="board__cell" data-cell="27" tabindex="0"></div>
+                    <div class="board__cell" data-cell="28" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="29"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">D</div>
+                    <div class="board__cell" data-cell="30" tabindex="0"></div>
+                    <div class="board__cell" data-cell="31" tabindex="0"></div>
+                    <div class="board__cell" data-cell="32" tabindex="0"></div>
+                    <div class="board__cell" data-cell="33" tabindex="0"></div>
+                    <div class="board__cell" data-cell="34" tabindex="0"></div>
+                    <div class="board__cell" data-cell="35" tabindex="0"></div>
+                    <div class="board__cell" data-cell="36" tabindex="0"></div>
+                    <div class="board__cell" data-cell="37" tabindex="0"></div>
+                    <div class="board__cell" data-cell="38" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="39"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">E</div>
+                    <div class="board__cell" data-cell="40" tabindex="0"></div>
+                    <div class="board__cell" data-cell="41" tabindex="0"></div>
+                    <div class="board__cell" data-cell="42" tabindex="0"></div>
+                    <div class="board__cell" data-cell="43" tabindex="0"></div>
+                    <div class="board__cell" data-cell="44" tabindex="0"></div>
+                    <div class="board__cell" data-cell="45" tabindex="0"></div>
+                    <div class="board__cell" data-cell="46" tabindex="0"></div>
+                    <div class="board__cell" data-cell="47" tabindex="0"></div>
+                    <div class="board__cell" data-cell="48" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="49"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">F</div>
+                    <div class="board__cell" data-cell="50" tabindex="0"></div>
+                    <div class="board__cell" data-cell="51" tabindex="0"></div>
+                    <div class="board__cell" data-cell="52" tabindex="0"></div>
+                    <div class="board__cell" data-cell="53" tabindex="0"></div>
+                    <div class="board__cell" data-cell="54" tabindex="0"></div>
+                    <div class="board__cell" data-cell="55" tabindex="0"></div>
+                    <div class="board__cell" data-cell="56" tabindex="0"></div>
+                    <div class="board__cell" data-cell="57" tabindex="0"></div>
+                    <div class="board__cell" data-cell="58" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="59"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">G</div>
+                    <div class="board__cell" data-cell="60" tabindex="0"></div>
+                    <div class="board__cell" data-cell="61" tabindex="0"></div>
+                    <div class="board__cell" data-cell="62" tabindex="0"></div>
+                    <div class="board__cell" data-cell="63" tabindex="0"></div>
+                    <div class="board__cell" data-cell="64" tabindex="0"></div>
+                    <div class="board__cell" data-cell="65" tabindex="0"></div>
+                    <div class="board__cell" data-cell="66" tabindex="0"></div>
+                    <div class="board__cell" data-cell="67" tabindex="0"></div>
+                    <div class="board__cell" data-cell="68" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="69"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">H</div>
+                    <div class="board__cell" data-cell="70" tabindex="0"></div>
+                    <div class="board__cell" data-cell="71" tabindex="0"></div>
+                    <div class="board__cell" data-cell="72" tabindex="0"></div>
+                    <div class="board__cell" data-cell="73" tabindex="0"></div>
+                    <div class="board__cell" data-cell="74" tabindex="0"></div>
+                    <div class="board__cell" data-cell="75" tabindex="0"></div>
+                    <div class="board__cell" data-cell="76" tabindex="0"></div>
+                    <div class="board__cell" data-cell="77" tabindex="0"></div>
+                    <div class="board__cell" data-cell="78" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="79"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">I</div>
+                    <div class="board__cell" data-cell="80" tabindex="0"></div>
+                    <div class="board__cell" data-cell="81" tabindex="0"></div>
+                    <div class="board__cell" data-cell="82" tabindex="0"></div>
+                    <div class="board__cell" data-cell="83" tabindex="0"></div>
+                    <div class="board__cell" data-cell="84" tabindex="0"></div>
+                    <div class="board__cell" data-cell="85" tabindex="0"></div>
+                    <div class="board__cell" data-cell="86" tabindex="0"></div>
+                    <div class="board__cell" data-cell="87" tabindex="0"></div>
+                    <div class="board__cell" data-cell="88" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="89"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --bottom --left">J</div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="90"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="91"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="92"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="93"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="94"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="95"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="96"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="97"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="98"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom --right"
+                        data-cell="99"
+                        tabindex="0"
+                    ></div>
+                </div>
+                <!-- TWO BOARDS -->
+                <div class="game__status"></div>
+                <div class="game__board --enemy" data-name="mike">
+                    <div class="board__cell cell__label --top --left"></div>
+                    <div class="board__cell cell__label --top">1</div>
+                    <div class="board__cell cell__label --top">2</div>
+                    <div class="board__cell cell__label --top">3</div>
+                    <div class="board__cell cell__label --top">4</div>
+                    <div class="board__cell cell__label --top">5</div>
+                    <div class="board__cell cell__label --top">6</div>
+                    <div class="board__cell cell__label --top">7</div>
+                    <div class="board__cell cell__label --top">8</div>
+                    <div class="board__cell cell__label --top">9</div>
+                    <div class="board__cell cell__label --top --right">10</div>
+                    <div class="board__cell cell__label --left">A</div>
+                    <div class="board__cell" data-cell="0" tabindex="0"></div>
+                    <div class="board__cell" data-cell="1" tabindex="0"></div>
+                    <div class="board__cell" data-cell="2" tabindex="0"></div>
+                    <div class="ship__unit board__cell">
+                        <div
+                            class="--ship-x-head board__cell"
+                            data-cell="3"
+                            tabindex="0"
+                        ></div>
+                        <div
+                            class="--ship-x-body board__cell"
+                            data-cell="4"
+                            tabindex="0"
+                        ></div>
+                        <div
+                            class="--ship-x-tail board__cell"
+                            data-cell="5"
+                            tabindex="0"
+                        ></div>
+                    </div>
+                    <div class="board__cell" data-cell="6" tabindex="0"></div>
+                    <div class="board__cell" data-cell="7" tabindex="0"></div>
+                    <div class="board__cell" data-cell="8" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="9"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">B</div>
+                    <div class="board__cell" data-cell="10" tabindex="0"></div>
+                    <div class="board__cell" data-cell="11" tabindex="0"></div>
+                    <div class="board__cell" data-cell="12" tabindex="0"></div>
+                    <div class="board__cell" data-cell="13" tabindex="0"></div>
+                    <div class="board__cell" data-cell="14" tabindex="0"></div>
+                    <div class="board__cell" data-cell="15" tabindex="0"></div>
+                    <div class="board__cell" data-cell="16" tabindex="0"></div>
+                    <div class="board__cell" data-cell="17" tabindex="0"></div>
+                    <div class="board__cell" data-cell="18" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="19"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">C</div>
+                    <div class="board__cell" data-cell="20" tabindex="0"></div>
+                    <div class="board__cell" data-cell="21" tabindex="0"></div>
+                    <div class="board__cell" data-cell="22" tabindex="0"></div>
+                    <div class="board__cell" data-cell="23" tabindex="0"></div>
+                    <div class="board__cell" data-cell="24" tabindex="0"></div>
+                    <div class="board__cell" data-cell="25" tabindex="0"></div>
+                    <div class="board__cell" data-cell="26" tabindex="0"></div>
+                    <div class="board__cell" data-cell="27" tabindex="0"></div>
+                    <div class="board__cell" data-cell="28" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="29"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">D</div>
+                    <div class="board__cell" data-cell="30" tabindex="0"></div>
+                    <div class="board__cell" data-cell="31" tabindex="0"></div>
+                    <div class="board__cell" data-cell="32" tabindex="0"></div>
+                    <div class="board__cell" data-cell="33" tabindex="0"></div>
+                    <div class="board__cell" data-cell="34" tabindex="0"></div>
+                    <div class="board__cell" data-cell="35" tabindex="0"></div>
+                    <div class="board__cell" data-cell="36" tabindex="0"></div>
+                    <div class="board__cell" data-cell="37" tabindex="0"></div>
+                    <div class="board__cell" data-cell="38" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="39"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">E</div>
+                    <div class="board__cell" data-cell="40" tabindex="0"></div>
+                    <div class="ship__unit--vertical board__cell">
+                        <div
+                            class="board__cell --ship-y-head --vertical"
+                            data-cell="41"
+                            tabindex="0"
+                        ></div>
+                        <div
+                            class="board__cell --ship-y-body --vertical"
+                            data-cell="51"
+                            tabindex="0"
+                        ></div>
+                        <div
+                            class="board__cell --ship-y-body --vertical"
+                            data-cell="61"
+                            tabindex="0"
+                        ></div>
+                        <div
+                            class="board__cell --ship-y-tail --vertical"
+                            data-cell="71"
+                            tabindex="0"
+                        ></div>
+                    </div>
+                    <div class="board__cell" data-cell="42" tabindex="0"></div>
+                    <div class="board__cell" data-cell="43" tabindex="0"></div>
+                    <div class="board__cell" data-cell="44" tabindex="0"></div>
+                    <div class="board__cell" data-cell="45" tabindex="0"></div>
+                    <div class="board__cell" data-cell="46" tabindex="0"></div>
+                    <div class="board__cell" data-cell="47" tabindex="0"></div>
+                    <div class="board__cell" data-cell="48" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="49"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">F</div>
+                    <div class="board__cell" data-cell="50" tabindex="0"></div>
+                    <div class="board__cell" data-cell="52" tabindex="0"></div>
+                    <div class="board__cell" data-cell="53" tabindex="0"></div>
+                    <div class="board__cell" data-cell="54" tabindex="0"></div>
+                    <div class="board__cell" data-cell="55" tabindex="0"></div>
+                    <div class="board__cell" data-cell="56" tabindex="0"></div>
+                    <div class="board__cell" data-cell="57" tabindex="0"></div>
+                    <div class="board__cell" data-cell="58" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="59"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">G</div>
+                    <div class="board__cell" data-cell="60" tabindex="0"></div>
+                    <div class="board__cell" data-cell="62" tabindex="0"></div>
+                    <div class="board__cell" data-cell="63" tabindex="0"></div>
+                    <div class="board__cell" data-cell="64" tabindex="0"></div>
+                    <div class="board__cell" data-cell="65" tabindex="0"></div>
+                    <div class="board__cell" data-cell="66" tabindex="0"></div>
+                    <div class="board__cell" data-cell="67" tabindex="0"></div>
+                    <div class="board__cell" data-cell="68" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="69"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">H</div>
+                    <div class="board__cell" data-cell="70" tabindex="0"></div>
+                    <div class="board__cell" data-cell="72" tabindex="0"></div>
+                    <div class="board__cell" data-cell="73" tabindex="0"></div>
+                    <div class="board__cell" data-cell="74" tabindex="0"></div>
+                    <div class="board__cell" data-cell="75" tabindex="0"></div>
+                    <div class="board__cell" data-cell="76" tabindex="0"></div>
+                    <div class="board__cell" data-cell="77" tabindex="0"></div>
+                    <div class="board__cell" data-cell="78" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="79"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --left">I</div>
+                    <div class="board__cell" data-cell="80" tabindex="0"></div>
+                    <div class="board__cell" data-cell="81" tabindex="0"></div>
+                    <div class="board__cell" data-cell="82" tabindex="0"></div>
+                    <div class="board__cell" data-cell="83" tabindex="0"></div>
+                    <div class="board__cell" data-cell="84" tabindex="0"></div>
+                    <div class="board__cell" data-cell="85" tabindex="0"></div>
+                    <div class="board__cell" data-cell="86" tabindex="0"></div>
+                    <div class="board__cell" data-cell="87" tabindex="0"></div>
+                    <div class="board__cell" data-cell="88" tabindex="0"></div>
+                    <div
+                        class="board__cell --right"
+                        data-cell="89"
+                        tabindex="0"
+                    ></div>
+                    <div class="board__cell cell__label --bottom --left">J</div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="90"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="91"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="92"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="93"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="94"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="95"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="96"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="97"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom"
+                        data-cell="98"
+                        tabindex="0"
+                    ></div>
+                    <div
+                        class="board__cell --bottom --right"
+                        data-cell="99"
+                        tabindex="0"
+                    ></div>
+                </div>
+            </div>
+        </main>
+        <div class="overlay --hidden" id="overlay">
+            <div class="overlay__modal --hidden" id="rules">
+                <div class="modal__header">
+                    <h4>How to play:</h4>
+                    <button id="modal__exit">X</button>
+                </div>
+                <div class="modal__body">
+                    <div class="modal__section">
+                        <h3><u>Objective</u>:</h3>
+                        <ul>
+                            <li>
+                                Be the first to sink all 5 of your opponent's
+                                ships!
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h3><u>Ship Placement</u>:</h3>
+                        <ul>
+                            <li>
+                                Each player begins by placing 5 ships on the
+                                board.
+                            </li>
+                            <li>
+                                Ships can be placed horizontally or vertically
+                            </li>
+                            <li>
+                                Ships cannot overlap nor be placed outside of
+                                the board.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h3><u>Naval Combat</u>:</h3>
+                        <ul>
+                            <li>
+                                Each player takes turns attacking a coordinate
+                                on the board.
+                            </li>
+                            <li>
+                                If an opponent's ship is hit, the cell will turn
+                                <span class="--danger">red</span>.
+                            </li>
+                            <li>
+                                If an attack misses, a green ring will appear.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./game.ts"></script>
+    </body>
+</html>

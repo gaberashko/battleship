@@ -4,6 +4,7 @@ type NumberPair = [number, number];
 
 type Cell = {
     hit: boolean;
+    sunk: boolean;
     ship: Ship | null;
 };
 
@@ -11,9 +12,10 @@ type attackResult = {
     hit: boolean;
     sunk: boolean;
     coords: NumberPair;
+    ship?: Ship | null;
 };
 
-const defaultCell: Cell = { hit: false, ship: null };
+const defaultCell: Cell = { hit: false, sunk: false, ship: null };
 
 class GameBoard {
     public readonly size: number = 10; // GameBoard grid size.
@@ -56,25 +58,13 @@ class GameBoard {
             !Array.from(this.shipPositions.keys()).includes(ship) &&
             (orientation === "horizontal" || orientation === "vertical")
         ) {
-            let coords: NumberPair[] = Array.from(
-                { length: ship.length },
-                (_, i) =>
-                    orientation === "horizontal"
-                        ? [startCoord[0] + i, startCoord[1]]
-                        : [startCoord[0], startCoord[1] + i]
+            let coords: NumberPair[] = getAdjacentCoords(
+                startCoord,
+                orientation,
+                ship.length
             );
 
-            if (
-                coords.every((coordPair) => {
-                    if (this.coordsValid(coordPair)) {
-                        let cell: Cell = this.getCell(coordPair) as Cell;
-
-                        return !this.hasShip(cell);
-                    } else {
-                        return false;
-                    }
-                })
-            ) {
+            if (this.validPlacement(shipName, coords, orientation)) {
                 for (let coordPair of coords) {
                     // The coordinates are valid, so associate them with the ship.
                     let cell: Cell = this.getCell(coordPair) as Cell;
@@ -84,13 +74,11 @@ class GameBoard {
                 this.shipPositions.set(ship, coords);
                 return true;
             } else {
-                /*console.error(
-                    "Attempted to place a ship in an invalid position."
-                );*/
-                return false;
                 // Potentially throw an error
+                return false;
             }
         } else {
+            // Potentially throw an error
             return false;
         }
     }
@@ -133,11 +121,21 @@ class GameBoard {
                 // If a ship exists, call hit() on it.
                 if (this.hasShip(targetCell)) {
                     targetCell.ship.hit();
+                    // If the ship was sunk, set all of its cells to sunk.
+                    if (targetCell.ship.isSunk()) {
+                        let shipCells = this.shipPositions
+                            .get(targetCell.ship)
+                            ?.map((coords) => this.getCell(coords));
+                        for (let cell of shipCells!) {
+                            cell!.sunk = true;
+                        }
+                    }
                 }
                 return {
                     hit: this.hasShip(targetCell),
                     sunk: targetCell.ship?.isSunk()!,
                     coords: coords,
+                    ship: targetCell.ship,
                 };
             } else {
                 throw new Error(`targetCell of receiveAttack() undefined.`);
@@ -159,6 +157,7 @@ class GameBoard {
         return this.board.map((row) =>
             row.map((cell) => ({
                 hit: cell.hit,
+                sunk: cell.sunk,
                 ship: cell.hit ? cell.ship : null,
             }))
         );
@@ -167,10 +166,9 @@ class GameBoard {
     // Prints out a current representation of the GameBoard.
     public print(): void {
         let output: string = "";
-        for (let row = this.size - 1; row >= 0; --row) {
+        for (let row = 0; row <= this.size - 1; ++row) {
             for (let col = 0; col <= this.size - 1; ++col) {
                 const cell: Cell = this.getCell([col, row]) as Cell;
-
                 if (cell.ship) {
                     output += cell.hit ? "💥" : "⚓";
                 } else {
@@ -186,6 +184,43 @@ class GameBoard {
     // Returns the specific ship object specified by the name, or undefined if doesn't exist.
     public getShip(name: string): Ship | undefined {
         return this.ships.find((ship) => ship.name === name);
+    }
+
+    // Returns the logical cells (as they'd be stored in hash) at which a ship resides.
+    public getShipCells(ship: Ship): number[] {
+        let shipCells = this.shipPositions.get(ship);
+        if (shipCells) {
+            return shipCells.map((coord) => this.coordToKey(coord));
+        } else {
+            return [];
+        }
+    }
+
+    // Returns whether or not a ship placement is valid without modifying the board.
+    public validPlacement(
+        shipName: string,
+        coords: NumberPair[],
+        orientation: "horizontal" | "vertical"
+    ): boolean {
+        const ship: Ship = this.getShip(shipName)!;
+        // Verify that the ship exists, has not been placed yet, and has valid orientation arg.
+        if (
+            ship &&
+            !Array.from(this.shipPositions.keys()).includes(ship) &&
+            (orientation === "horizontal" || orientation === "vertical")
+        ) {
+            return coords.every((coordPair) => {
+                if (this.coordsValid(coordPair)) {
+                    let cell: Cell = this.getCell(coordPair) as Cell;
+
+                    return !this.hasShip(cell);
+                } else {
+                    return false;
+                }
+            });
+        } else {
+            return false;
+        }
     }
 
     // INTERNAL FUNCTIONS
@@ -210,7 +245,31 @@ class GameBoard {
     private wasAttacked(cell: Cell): boolean {
         return cell.hit;
     }
+
+    // Hash a coordinate to a number for storage.
+    private coordToKey([x, y]: NumberPair): number {
+        return y * this.size + x;
+    }
+
+    // Retrieve the coordinate from a number hash.
+    private keyToCoord(key: number): NumberPair {
+        return [key % this.size, Math.floor(key / this.size)];
+    }
 }
 
-export { GameBoard };
+function getAdjacentCoords(
+    startCoord: NumberPair,
+    orientation: "horizontal" | "vertical",
+    length: number
+): NumberPair[] {
+    let coords: NumberPair[] = Array.from({ length: length }, (_, i) =>
+        orientation === "horizontal"
+            ? [startCoord[0] + i, startCoord[1]]
+            : [startCoord[0], startCoord[1] + i]
+    );
+
+    return coords;
+}
+
+export { GameBoard, getAdjacentCoords };
 export type { NumberPair, attackResult, Cell };

@@ -26,6 +26,59 @@
     }
 }
 
+@keyframes typing {
+    from {
+        width:100%;
+    }
+    to {
+        width:0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        filter: brightness(1.1) saturate(1) drop-shadow($glow);
+    }
+
+    50% {
+        filter: brightness(1.1) saturate(1) drop-shadow($glow);
+    }
+
+    100% {
+        filter: brightness(.8) saturate(.7);
+    }
+}
+
+@keyframes blurpulse {
+    from {
+        filter: hue-rotate(-110deg) saturate(4) brightness(.4) blur(0px);
+    }
+
+    to {
+        filter: hue-rotate(-110deg) saturate(5) brightness(.7) blur(2px);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(45deg);
+    }
+
+    to {
+        transform:rotate(135deg);
+    }
+}
+
+@keyframes focus {
+    from {
+        filter: blur(0px) saturate(3);
+    }
+
+    to {
+        filter: blur(1px) saturate(.2);
+    }
+}
+
 %blinking {
     animation: blink .6s steps(3) infinite alternate;
 }
