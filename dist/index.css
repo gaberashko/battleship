@@ -839,7 +839,7 @@ fieldset {
   transition: text-shadow, background-color 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .board__cell.--attack.--hit::after, .board__cell.--hit.--attacking::after {
-  background: url(a9068d31e8115209229a.svg) 50% 50%/60% 60% no-repeat;
+  background: url(ff60d239c4b812438646.svg) 50% 50%/60% 60% no-repeat;
 }
 .board__cell.--attack.--miss::after, .board__cell.--miss.--attacking::after {
   color: #31df31;
@@ -851,7 +851,7 @@ fieldset {
 }
 .board__cell.--attack.--sunk::after, .board__cell.--sunk.--attacking::after {
   filter: drop-shadow(#878787 0px 0px 2px);
-  background: url(cf1505d802f33c894ac7.svg) 50% 50%/60% 60% no-repeat;
+  background: url(c31db2aa30ee3b6bfa49.svg) 50% 50%/60% 60% no-repeat;
 }
 .board__cell.--attack.--sunk:hover, .board__cell.--sunk.--attacking:hover {
   background-color: rgba(135, 135, 135, 0.3);
