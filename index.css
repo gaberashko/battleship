@@ -777,6 +777,7 @@ fieldset {
 
 .game__status {
   min-width: 31ch;
+  width: 31ch;
 }
 .game__status h5 {
   text-overflow: ellipsis;
