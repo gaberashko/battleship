@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Battleship</title>
+        <link rel="stylesheet" href="31d6cfe0d16ae931b73c.css" />
+    <script defer src="index.js"></script><link href="index.css" rel="stylesheet"></head>
+    <body>
+        <header>
+            <h1>Battleship</h1>
+            <button id="header__help_btn">Help</button>
+        </header>
+        <main>
+            <section>
+                <br />> <br />>
+                <h4 class="--console">Choose your opponent:</h4>
+            </section>
+            <section>
+                <button class="main__button" id="ai_btn">
+                    <pre>
+                                                  
+           @#%       @#@  @#@       %#%           
+           %*%       %*%  %*%       #*%           
+            #         %    %         #            
+            @@@@@%#   @    @   #%%@@%@            
+                 #*   @    @   *#                 
+  @#%*#*         #=   %    %   =#         *#*%#%  
+  @#%  -@    @%@@%%@@@%%@@%%%@@%%%@%@    %:  %#%  
+       :%    #                      #    #:       
+       +%@@@%%   @@@@@@@@@@@@@@%@  .@%@@%%+       
+             %   %              %                 
+  *%%        %   @            @ @   @        %#*  
+  @=%@@@@@@@%%   @            @ @   %%@@@@@@%%=@  
+             #                @ @   #             
+  @+%@@@@@@@%%   @              @   %#@@@@@@%%+@  
+  #%%        %   @              @   %        %#*  
+             %   %              %   %             
+       +%%@@%%   @%@@@@@@@@@@@@%@   %%@@%%=       
+       :#    #                      #    #.       
+  %#%  -@    @%@%%%%@%%%@@%%%@%%%%@%@    %:  %#%  
+  %#%##*         *=   %    %   -*        .***%*%  
+                 #*   @    @   *#                 
+            @%@@%%#   @    @   #%%@@%@            
+            #         %    %         *            
+           %*#       %*#  #*%       #*#           
+           %#%       %#%  %#%       %*%           
+                                                  
+</pre
+                    >
+                    AI
+                </button>
+                <button class="main__button" id="human_btn">
+                    <pre>
+                    .:=*=*=*=*=*=:.                    
+                  .=#@@@@@@@@@@@@@#=.                  
+                .:%@@@@@@@@@@@@@@@@@%:.                
+               .-%@@@@@@@@@@@@@@@@@@@%-.               
+               :#@@@@@@@@@@@@@@@@@@@@@%:.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@*.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@#.              
+              .*@@@@@@@@@@@@@@@@@@@@@@@#.              
+               =%@@@@@@@@@@@@@@@@@@@@@@=               
+               .*@@@@@@@@@@@@@@@@@@@@@*.               
+                .+@@@@@@@@@@@@@@@@@@@*.                
+                  -#@@@@@@@@@@@@@@@#-                  
+                .....#@@@@@@@@@@@#....                 
+               .-%@=..    ...    ..=@%-..              
+            .:*@@@@@@@%*-.....-*%@@@@@@@*:.            
+          ..+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*..          
+         .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.         
+        .=%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=.        
+       .-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.       
+       .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*..      
+      .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%=.      
+      .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.      
+     .-%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%-.     
+     .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.     
+     .+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.     
+     .-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#-.     
+      ..=#%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#=..      
+</pre
+                    >
+                    Human
+                </button>
+            </section>
+        </main>
+        <div class="overlay --hidden" id="overlay">
+            <div class="overlay__modal --hidden" id="rules">
+                <div class="modal__header">
+                    <h4>How to play:</h4>
+                    <button id="modal__exit">X</button>
+                </div>
+                <div class="modal__body">
+                    <div class="modal__section">
+                        <h5><u>Objective</u>:</h5>
+                        <ul>
+                            <li>
+                                Be the first to sink all 5 of your opponent's
+                                ships!
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Ship Placement</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player begins by placing 5 ships on the
+                                board.
+                            </li>
+                            <li>
+                                Ships can be placed horizontally or vertically
+                            </li>
+                            <li>
+                                Ships cannot overlap nor be placed outside of
+                                the board.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="modal__section">
+                        <h5><u>Naval Combat</u>:</h5>
+                        <ul>
+                            <li>
+                                Each player takes turns attacking a coordinate
+                                on the board.
+                            </li>
+                            <li>
+                                If an opponent's ship is hit, the cell will turn
+                                <span class="--danger">red</span>.
+                            </li>
+                            <li>
+                                If an attack misses, a green ring will appear.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay__modal --hidden" id="start">
+                <div class="modal__header">
+                    <h4>Prepare to fight:</h4>
+                    <button id="modal__exit">X</button>
+                </div>
+                <div class="modal__body">
+                    <form class="modal__form" novalidate>
+                        <div class="modal__input" id="player1">
+                            <label for="input_name1">
+                                <h5><u>Player one's name</u>:</h5>
+                            </label>
+                            <div class="input__wrapper">
+                                <input
+                                    type="text"
+                                    name="name1"
+                                    id="input_name1"
+                                    autocomplete="off"
+                                    maxlength="16"
+                                    minlength="2"
+                                />
+                            </div>
+                        </div>
+                        <div class="modal__input" id="player2">
+                            <label for="input_name2">
+                                <h5><u>Player two's name</u>:</h5>
+                            </label>
+                            <div class="input__wrapper">
+                                <input
+                                    type="text"
+                                    name="name2"
+                                    id="input_name2"
+                                    autocomplete="off"
+                                    maxlength="16"
+                                    minlength="2"
+                                />
+                            </div>
+                        </div>
+                        <div class="modal__input" id="difficulty">
+                            <h5><u>Select difficulty</u>:</h5>
+                            <fieldset>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_easy"
+                                        value="easy"
+                                    /><label for="difficulty_easy">Easy</label>
+                                </div>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_medium"
+                                        value="medium"
+                                        class="--warn"
+                                    /><label
+                                        for="difficulty_medium"
+                                        class="--warn"
+                                        >Medium</label
+                                    >
+                                </div>
+                                <div class="input__wrapper">
+                                    <input
+                                        type="radio"
+                                        name="difficulty"
+                                        id="difficulty_hard"
+                                        value="hard"
+                                        class="--danger"
+                                    /><label
+                                        for="difficulty_hard"
+                                        class="--danger"
+                                        >Hard</label
+                                    >
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button
+                            class="modal__button"
+                            id="modal__start_btn"
+                            type="submit"
+                        >
+                            Start
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="overlay__modal --hidden" id="turn">
+                <div class="modal__header">
+                    <h4>Player_Name's turn</h4>
+                </div>
+                <br />> <br />>
+                <div class="modal__body --center">
+                    <h5>Pass the device to Player_Name</h5>
+                    <br />
+                    <p class="--console">...make this shot count!</p>
+                    <br />
+                    <button
+                        class="modal__button"
+                        id="modal__turn_btn"
+                        type="button"
+                    >
+                        Ready
+                    </button>
+                </div>
+            </div>
+            <div class="overlay__modal --hidden" id="win">
+                <div class="modal__header">
+                    <h4>Player_Name's has won!</h4>
+                </div>
+                <div class="modal__body --center">
+                    <pre>
+                  _,                         .,
+                jW#                          !#W,
+              .W##|        ._                 M##L
+             .W###  ._jmmm#@'     jmW#####WL_ !###;
+         .W| W###!j#######P        ~~*#######W,M###, #L
+        .W#| ###@d######@~            `Y#######!###| ##;
+        W##| ##f/*****~'                 ~*****t/M#| ###;
+       :###!.Km8mW###mL,                 _mm###WWG#| ###W
+    .; |### Z~*#########W,             :W########@fY,####,.L
+    dW |##P.!  .XX7~~~'                   ~~~~XXL   \/###'|#;
+   .##;`##/\m#######+                       4######WL`##@ ##b
+   |##b #KW#####@f'                          `YM######K(|:###
+   |### @~~**M~'                                 ~V**~~Y|d###
+   |### |.jm###@f                              `M###Wm, tV###
+ W;`##|/:#####f                                  `M####L`Z##f d|
+ ##,!#\G####*'                                     Y####W\#P d#|
+ ###,|W@**5Wm#f                                   MWm#**M#| j##|
+ ###W`| .m###!                                     M##WL  |j###|
+ |###;|.####!                                       M###W |####
+_ M##W'W###f_r                                     m/M###;|###! _
+#W/*#@d##*G##!                                     M#WZ###|#@'jWP
+###L`|P~ d##@                                      !##W,`Y#f.W##'
+|###W/| d###|                                       ####  @j###@
+ M###bt ###@.W!                                   |L!###;|:####!
+  M###d:##@\##                                    |#WV##|/W###'
+ _ ~*#b#@f ###                                    |##;`MWN#@f'_,
+ M#m_ ~M, |### d|                               W,|##W  8/ .j##
+ `M###m_5 |###:#b                              .#W|### :\jW###!
+  `M####L\|##@W##,                             d##!###:\#####!
+    Y####b|#@ ###|:W                        d|.###|!#bN####*'
+     `~**MW#! ####|#W                      j##|###! !P#**f'
+     mmL__/~~\d###|##W,|L              .W!j###|##@_/~~___mmr
+     `M#####W,\##||###b|##L          .W##:###P!##P.j######f
+       YM#####W/#  ####/###W,       j###P####! M5m######*'
+         `~**f~~Y+L`M##|!####;     W###@ ##@'_rf~~~**f'
+          ._mmmmmmmX=8#| `M##W    |###*' #5/(Gmmmmmm__
+           YM########mXb,  ~*#,   #@f'  _WWW########*'
+             `Y***#*f'_d####K8b  .W8#####_ ~*M@***~
+                  _jm#######@\/f~+(########Wm_
+                  ~**###@**~:'     \/Y*M###@*f'
+</pre
+                    >
+                    <br />
+                    <h5>Nice work, man.</h5>
+                    <button
+                        class="modal__button"
+                        id="modal__main_menu_btn"
+                        type="button"
+                    >
+                        Menu
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="f4134677aa8b58a6bb0d.ts"></script>
+    </body>
+</html>
