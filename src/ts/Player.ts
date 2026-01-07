@@ -104,10 +104,10 @@ class Player {
 
     // Returns the next coordinate that the AI will attack.
     private getAttack(): NumberPair {
-        console.log(
+        /*console.log(
             "getAttack() Current target queue:",
             this.memory?.targetQueue
-        );
+        );*/
         let targetCoord: NumberPair;
 
         switch (this.difficulty) {
@@ -149,7 +149,7 @@ class Player {
                     this.memory?.moveHistory.has(this.coordToKey(targetCoord))
                 );
         }
-        console.log("getAttack() returning the coord:", targetCoord!);
+        // console.log("getAttack() returning the coord:", targetCoord!);
         return targetCoord!;
     }
 
@@ -163,25 +163,25 @@ class Player {
             [0, -1],
             [-1, 0],
         ];
-        console.log("updateMemory() received attack result:", result);
+        // console.log("updateMemory() received attack result:", result);
         // Add the coordinate attacked to the move history.
         this.memory?.moveHistory.add(this.coordToKey(result.coords));
 
         // We had a valid hit, so add it to hits on target, and rebuild queue of cells to target.
         if (result.hit) {
-            console.log("Recognized as hit");
+            // console.log("Recognized as hit");
             this.memory?.hits.push(result.coords);
             this.memory!.targetQueue = [];
         }
 
         // Target sunk, clear the current hits on target.
         if (result.sunk) {
-            console.log("Recognized as sunk");
+            // console.log("Recognized as sunk");
             this.memory!.hits = [];
             this.memory!.targetQueue = []; // Just to be safe ;)
         }
 
-        console.log("updateMemory() has hits memory of:", this.memory?.hits);
+        // console.log("updateMemory() has hits memory of:", this.memory?.hits);
 
         // One hit on the ship, orientation not known, so add plus adjacent cells.
         if (this.memory?.hits.length == 1) {
@@ -195,7 +195,7 @@ class Player {
                     )
                 );
         } else if (this.memory?.hits.length! > 1) {
-            console.log("updateMemory() hits length is greater than 1");
+            // console.log("updateMemory() hits length is greater than 1");
             // Gauge the orientation of the current target ship.
             let [c1, c2] = [this.memory?.hits[0], this.memory?.hits[1]];
             orientation = c1![0] === c2![0] ? "vertical" : "horizontal";
@@ -206,17 +206,17 @@ class Player {
                 max: number = 0;
             let axis: number = orientation === "vertical" ? 1 : 0;
 
-            console.log("We recognize the ship to be", orientation);
+            // console.log("We recognize the ship to be", orientation);
 
             for (const coord of this.memory?.hits!) {
                 min = coord[axis]! < min ? coord[axis]! : min;
                 max = coord[axis]! > max ? coord[axis]! : max;
             }
-            console.log(
+            /*console.log(
                 `We have a minimum value ${
                     orientation == "vertical" ? "y" : "x"
                 } coordinate of ${min} and maximum of ${max}`
-            );
+            );*/
 
             /* ISSUE HERE V WE DON'T APPEND ANY NEW ADJACENT COORDS, WE JUST KEEP THE SAME TWO ADJACENT ONES */
             // Filter possible candidate coordinates for ones that can exist on board.
@@ -255,30 +255,30 @@ class Player {
             //     }
             // }) as NumberPair[];
 
-            console.log(
+            /*console.log(
                 "We have the following adjacentCoords:",
                 adjacentCoords
-            );
+            );*/
 
             adjacentCoords.filter((coords) =>
                 coords.every((coord) => coord >= 0 && coord < this.board.size)
             );
 
-            console.log(
+            /*console.log(
                 "The filtered adjacent coordinates to add are:",
                 adjacentCoords
-            );
+            );*/
         }
-        console.log(
+        /*console.log(
             "updateMemory() movehistory before adding adjacent coords:",
             this.memory?.moveHistory
-        );
+        );*/
         // All valid adjacent coords that haven't been tried yet get added.
         if (adjacentCoords.length > 0) {
             for (const coord of adjacentCoords) {
                 if (!this.memory?.moveHistory.has(this.coordToKey(coord))) {
                     this.memory?.targetQueue.push(coord);
-                    console.log("Adding ", coord);
+                    // console.log("Adding ", coord);
                 }
             }
         }

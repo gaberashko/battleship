@@ -83,7 +83,7 @@ class GameBoard {
                 }
                 // Associate the ship with the array of coordinates it was placed at.
                 this.shipPositions.set(ship, coords);
-                console.log(this.shipPositions);
+                // console.log(this.shipPositions);
                 return true;
             } else {
                 // Potentially throw an error
@@ -119,11 +119,6 @@ class GameBoard {
     // Takes a pair of coordinates, and if a ship exists, calls hit on the ship.
     // Returns results of attack if successful, and null if unsuccessful.
     public receiveAttack(coords: NumberPair): attackResult | null {
-        /* remove this */
-        let gameMode = sessionStorage.getItem("mode");
-        if (gameMode == AI_MODE)
-            console.log("receiveAttack() received coords:", coords);
-
         if (this.coordsValid(coords)) {
             let targetCell: Cell = this.getCell(coords) as Cell;
             if (targetCell) {
@@ -148,7 +143,7 @@ class GameBoard {
                         }
                     }
                 }
-                console.log("at the end of receiveAttack, coords is", coords);
+                // console.log("at the end of receiveAttack, coords is", coords);
                 return {
                     hit: this.hasShip(targetCell),
                     sunk: targetCell.ship?.isSunk()!,
@@ -196,7 +191,7 @@ class GameBoard {
             output += "\n";
         }
 
-        console.log(output);
+        // console.log(output);
     }
 
     // Returns the specific ship object specified by the name, or undefined if doesn't exist.

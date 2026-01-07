@@ -104,7 +104,7 @@ for (const button of buttons) {
                     }
 
                     const formData = new FormData(startForm);
-                    console.log("Form Data:", formData);
+                    // console.log("Form Data:", formData);
 
                     const [playerName1, playerName2] = [
                         formData.get("name1"),
@@ -115,13 +115,14 @@ for (const button of buttons) {
                         | "easy"
                         | "medium"
                         | "hard";
+                    /*
                     console.log(
                         "Player names:",
                         playerName1,
                         `${playerName2 ?? AI_NAME}`
                     );
                     console.log("Difficulty:", difficulty);
-
+                    */
                     const players = [
                         new Player({
                             name: <string>playerName1,
@@ -143,12 +144,12 @@ for (const button of buttons) {
                     });
 
                     for (const player of players) {
-                        console.log(`Player information:`);
-                        console.dir(player);
+                        // console.log(`Player information:`);
+                        // console.dir(player);
 
                         // Perform placement procedure for all players before starting.
                         await player.placeAllShips();
-                        player.board.print();
+                        // player.board.print();
                     }
                     // Set up the page for the game.
                     displayGamePage(players);
@@ -554,7 +555,7 @@ function dragShip(e: PointerEvent, player: Player): void {
             placeShipDOM(boardDiv, ship, startCoord, data.curOrientation);
             data.startCoord = startCoord;
         } else if (data.previouslyPlaced === "true") {
-            console.log(`Placement at cell ${cellKey} failed.`);
+            // console.log(`Placement at cell ${cellKey} failed.`);
             // Put the ship back in its original spot and orientation.
             // console.log("We logged orientation as", data.startOrientation);
             player.placeShip(

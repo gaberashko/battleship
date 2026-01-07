@@ -70,7 +70,7 @@ const displaySetupPage = (player: Player) => {
                         <div class="--ship-head"></div>
                         <div class="--ship-tail"></div>
                     </div>
-                    <button id="confirm_btn" style="">Confirm</button>
+                    <button id="confirm_btn" style="hidden">Confirm</button>
                 </div>
                 <div class="game__board">
                     <div class="board__cell cell__label --top --left"></div>

@@ -230,7 +230,7 @@ class GameRenderer implements Renderer {
         const attackerName: string = state.curPlayer.name;
         const opponentName: string = state.oppPlayer.name;
         const { hit, sunk, coords, ship } = state.attackResult!;
-        console.log(state.attackResult);
+        // console.log(state.attackResult);
         const coordLabel: string = `${ROW_LABELS[coords[1]]}${
             COLUMN_LABELS[coords[0]]
         }`;
