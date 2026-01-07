@@ -270,7 +270,7 @@ const displaySetupPage = (player: Player) => {
                         data-cell="99"
                         tabindex="0"
                     ></div>
-                </div>
+                </div>t
                 <p style="width: 30ch">Press "r" key while dragging a ship to rotate</p>
             </div>`;
 };
