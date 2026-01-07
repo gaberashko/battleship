@@ -6,6 +6,8 @@
 }
 
 $blur: 4px;
+$obscure: 12px;
+$rollerShadow: 0px 0px 64px;
 
 @keyframes openModal {
     0% {
@@ -68,6 +70,21 @@ $blur: 4px;
         }
     }
 
+    .modal__body {
+
+        pre {
+            cursor:default;
+            user-select: none;
+        }
+        
+        &.--center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     .modal__section {
         h5 {
             margin-bottom: $xspd;
@@ -95,7 +112,7 @@ $blur: 4px;
     .modal__button {
         width: fit-content;
         align-self:center;
-        margin-top:$lpd;
+        margin-top:$mpd;
         justify-self:end;
     }
 
@@ -119,8 +136,31 @@ $blur: 4px;
 
     }
 
+    &.--obscure {
+        background-color: rgba($accentsec, 1);
+        transition: none;
+
+        &::after {
+            content:"";
+            pointer-events:none;
+            position: absolute;
+            box-shadow: rgba($miss--accentprim, .4) $rollerShadow;
+            background-color: $miss--accentprim;
+            background: repeating-linear-gradient(0, rgba($miss--accentprim, .4) 0 10px, $bg-prim 10px 13px) !important;
+            opacity:.1;
+            width:100%;
+            height:40%;
+            animation: roll 8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+            filter:blur(4px);
+            z-index:-1;
+
+        }
+    }
+
     &.--opening {
         @extend .overlay;
+
+        transition: width, $anim_fluid !important;
 
         & .overlay__modal {
             transition: width, height, padding, $anim_fluid var(--anim-delay);

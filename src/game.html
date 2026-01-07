@@ -13,68 +13,7 @@
         </header>
         <main>
             <div class="main__game">
-                <!-- SHIP CONTAINER -->
-                <div class="ship__container">
-                    <h5>Your fleet:</h5>
-                    <div
-                        class="ship__unit --placeable --horizontal"
-                        draggable=""
-                        data-name="carrier"
-                        data-length="5"
-                        data-orientation="horizontal"
-                    >
-                        <div class="--ship-x-head"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-tail"></div>
-                    </div>
-                    <div
-                        class="ship__unit --placeable --horizontal"
-                        draggable=""
-                        data-name="battleship"
-                        data-length="4"
-                        data-orientation="horizontal"
-                    >
-                        <div class="--ship-x-head"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-tail"></div>
-                    </div>
-                    <div
-                        class="ship__unit --placeable --horizontal"
-                        draggable=""
-                        data-name="cruiser"
-                        data-length="3"
-                        data-orientation="horizontal"
-                    >
-                        <div class="--ship-x-head"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-tail"></div>
-                    </div>
-                    <div
-                        class="ship__unit --placeable --horizontal"
-                        draggable=""
-                        data-name="submarine"
-                        data-length="3"
-                        data-orientation="horizontal"
-                    >
-                        <div class="--ship-x-head"></div>
-                        <div class="--ship-x-body"></div>
-                        <div class="--ship-x-tail"></div>
-                    </div>
-                    <div
-                        class="ship__unit --placeable --horizontal"
-                        draggable=""
-                        data-name="destroyer"
-                        data-length="2"
-                        data-orientation="horizontal"
-                    >
-                        <div class="--ship-x-head"></div>
-                        <div class="--ship-x-tail"></div>
-                    </div>
-                </div>
-                <div class="game__board" data-name="a">
+                <div class="game__board">
                     <div class="board__cell cell__label --top --left"></div>
                     <div class="board__cell cell__label --top">1</div>
                     <div class="board__cell cell__label --top">2</div>
@@ -273,7 +212,7 @@
                         tabindex="0"
                     ></div>
                 </div>
-                <!-- TWO BOARDS -->
+
                 <div class="game__status"></div>
                 <div class="game__board --enemy" data-name="mike">
                     <div class="board__cell cell__label --top --left"></div>
@@ -291,23 +230,9 @@
                     <div class="board__cell" data-cell="0" tabindex="0"></div>
                     <div class="board__cell" data-cell="1" tabindex="0"></div>
                     <div class="board__cell" data-cell="2" tabindex="0"></div>
-                    <div class="ship__unit board__cell">
-                        <div
-                            class="--ship-x-head board__cell"
-                            data-cell="3"
-                            tabindex="0"
-                        ></div>
-                        <div
-                            class="--ship-x-body board__cell"
-                            data-cell="4"
-                            tabindex="0"
-                        ></div>
-                        <div
-                            class="--ship-x-tail board__cell"
-                            data-cell="5"
-                            tabindex="0"
-                        ></div>
-                    </div>
+                    <div class="board__cell" data-cell="3" tabindex="0"></div>
+                    <div class="board__cell" data-cell="4" tabindex="0"></div>
+                    <div class="board__cell" data-cell="5" tabindex="0"></div>
                     <div class="board__cell" data-cell="6" tabindex="0"></div>
                     <div class="board__cell" data-cell="7" tabindex="0"></div>
                     <div class="board__cell" data-cell="8" tabindex="0"></div>
@@ -363,28 +288,7 @@
                     ></div>
                     <div class="board__cell cell__label --left">E</div>
                     <div class="board__cell" data-cell="40" tabindex="0"></div>
-                    <div class="ship__unit--vertical board__cell">
-                        <div
-                            class="board__cell --ship-y-head --vertical"
-                            data-cell="41"
-                            tabindex="0"
-                        ></div>
-                        <div
-                            class="board__cell --ship-y-body --vertical"
-                            data-cell="51"
-                            tabindex="0"
-                        ></div>
-                        <div
-                            class="board__cell --ship-y-body --vertical"
-                            data-cell="61"
-                            tabindex="0"
-                        ></div>
-                        <div
-                            class="board__cell --ship-y-tail --vertical"
-                            data-cell="71"
-                            tabindex="0"
-                        ></div>
-                    </div>
+                    <div class="board__cell" data-cell="41" tabindex="0"></div>
                     <div class="board__cell" data-cell="42" tabindex="0"></div>
                     <div class="board__cell" data-cell="43" tabindex="0"></div>
                     <div class="board__cell" data-cell="44" tabindex="0"></div>
@@ -399,6 +303,7 @@
                     ></div>
                     <div class="board__cell cell__label --left">F</div>
                     <div class="board__cell" data-cell="50" tabindex="0"></div>
+                    <div class="board__cell" data-cell="51" tabindex="0"></div>
                     <div class="board__cell" data-cell="52" tabindex="0"></div>
                     <div class="board__cell" data-cell="53" tabindex="0"></div>
                     <div class="board__cell" data-cell="54" tabindex="0"></div>
@@ -413,6 +318,7 @@
                     ></div>
                     <div class="board__cell cell__label --left">G</div>
                     <div class="board__cell" data-cell="60" tabindex="0"></div>
+                    <div class="board__cell" data-cell="61" tabindex="0"></div>
                     <div class="board__cell" data-cell="62" tabindex="0"></div>
                     <div class="board__cell" data-cell="63" tabindex="0"></div>
                     <div class="board__cell" data-cell="64" tabindex="0"></div>
@@ -427,6 +333,7 @@
                     ></div>
                     <div class="board__cell cell__label --left">H</div>
                     <div class="board__cell" data-cell="70" tabindex="0"></div>
+                    <div class="board__cell" data-cell="71" tabindex="0"></div>
                     <div class="board__cell" data-cell="72" tabindex="0"></div>
                     <div class="board__cell" data-cell="73" tabindex="0"></div>
                     <div class="board__cell" data-cell="74" tabindex="0"></div>

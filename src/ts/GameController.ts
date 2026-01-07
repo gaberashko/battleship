@@ -10,17 +10,26 @@ type GameState = {
 };
 
 interface Renderer {
-    renderBoard(
-        player: Player,
-        hideShips?: boolean,
-        callbacks?: (...arg: any) => any
-    ): void;
+    renderBoard({
+        player,
+        hideShips,
+        callback,
+        editable,
+        isCurPlayer,
+    }: {
+        player: Player;
+        hideShips: boolean;
+        callback?: (...arg: any) => any;
+        editable?: boolean;
+        isCurPlayer?: boolean;
+    }): void;
     renderAttack(state: GameState): void;
-    displayGameOver(): void;
+    renderPlayerTransition(state: GameState): void;
+    displayGameOver(state: GameState): void;
 }
 
 const [SHIPS_HIDDEN, SHIPS_VISIBLE] = [true, false];
-const AI_ATTACK_DELAY: number = 1000;
+const ATTACK_TRANSITION_TIME: number = 2.5; // In seconds
 
 class GameController {
     private state: GameState;
@@ -31,12 +40,7 @@ class GameController {
         private renderer?: Renderer
     ) {
         this.state = this.initializeGameState();
-        this.renderer?.renderBoard(player1, SHIPS_HIDDEN, (coords) =>
-            this.attack(player2.board, coords)
-        );
-        this.renderer?.renderBoard(player2, SHIPS_VISIBLE, (coords) =>
-            this.attack(player1.board, coords)
-        );
+        this.start();
     }
 
     // Getter function for the current state of the game.
@@ -44,27 +48,19 @@ class GameController {
         return this.state;
     }
 
-    // Attack the coordinates passed, or if AI, generate coordinates.
-    public attack(board?: GameBoard, coords?: [number, number]): void {
+    public async attack(
+        board?: GameBoard,
+        coords?: [number, number]
+    ): Promise<void> {
+        // console.log("Attack function called");
         let result = this.state.curPlayer.attack(
             board ? board : this.state.oppPlayer.board,
             coords
         );
         if (result) {
             this.state.attackResult = result;
-            this.renderer?.renderAttack(this.state);
-            this.renderer?.renderBoard(this.state.oppPlayer, SHIPS_VISIBLE);
+            await this.renderer?.renderAttack(this.state);
         }
-        /*
-        if (!this.state.curPlayer.isHuman) {
-            await delay(AI_ATTACK_DELAY);
-            return this.state.curPlayer.attack(this.state.oppPlayer.board);
-        } else {
-            return this.state.curPlayer.attack(
-                this.state.oppPlayer.board,
-                coords
-            );
-        }*/
     }
 
     // INTERNAL FUNCTIONS
@@ -79,26 +75,75 @@ class GameController {
         };
     }
 
-    // Initialize the game loop.
-    private start(): void {}
+    // Initialize the game-loop.
+    private async start() {
+        let gameOver: boolean = false;
+        let turn: number = 1;
+        while (!gameOver) {
+            // console.log("Game not over, turn ", turn);
+            await this.handleTurn();
+            gameOver =
+                this.state.curPlayer.board.allShipsSunk() ||
+                this.state.oppPlayer.board.allShipsSunk();
+            ++turn;
+            // If we aren't done, swap the players.
+            if (!gameOver) {
+                await this.swapPlayers();
+            }
+        }
+        this.renderer?.displayGameOver(this.state);
+    }
 
-    // Switches the current player, and rerenders the board.
-    private async nextTurn(): Promise<void> {
-        // Swap the current player.
+    // Let the current player attack, and swap afterwards.
+    private handleTurn(): Promise<void> {
+        return new Promise(async (res) => {
+            const curPlayer: Player = this.state.curPlayer;
+            const oppPlayer: Player = this.state.oppPlayer;
+            const isCurPlayerAI: boolean = !curPlayer.isHuman;
+
+            // Render the players' boards.
+            this.renderer?.renderBoard({
+                player: curPlayer,
+                hideShips: isCurPlayerAI ? SHIPS_HIDDEN : SHIPS_VISIBLE,
+                isCurPlayer: true,
+            });
+            // console.log("Rendered board for", curPlayer);
+            this.renderer?.renderBoard({
+                player: oppPlayer,
+                hideShips: isCurPlayerAI ? SHIPS_VISIBLE : SHIPS_HIDDEN,
+                callback: curPlayer.isHuman
+                    ? async (coords) => {
+                          await this.attack(oppPlayer.board, coords);
+                          await delay(ATTACK_TRANSITION_TIME * 1000);
+                          res();
+                      }
+                    : () => {},
+                isCurPlayer: false,
+                // ^ We only allow callback given that the person attacking is not an AI.
+            });
+            // console.log("Rendered board for", oppPlayer);
+
+            // If the player is an AI, generate an attack after a time delay.
+            if (!curPlayer.isHuman) {
+                await delay(ATTACK_TRANSITION_TIME * 1000);
+                await this.attack();
+                res();
+            }
+        });
+    }
+
+    // Switches the current player.
+    private async swapPlayers(): Promise<void> {
         [this.state.curPlayer, this.state.oppPlayer] = [
             this.state.oppPlayer,
             this.state.curPlayer,
         ];
 
-        // If the current player is an AI, generate an attack.
-        if (!this.state.curPlayer.isHuman) {
-            await this.attack();
-            await this.nextTurn();
-        }
+        await this.renderer?.renderPlayerTransition(this.state);
     }
 }
 
-function delay(ms: number): Promise<void> {
+async function delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 

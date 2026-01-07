@@ -1,5 +1,7 @@
 import { GameBoard } from "./GameBoard";
 import type { NumberPair, attackResult } from "./GameBoard";
+import { dragShip } from "../index";
+import { displaySetupPage } from "../setup";
 
 type memory = {
     placementHistory: Set<string>;
@@ -12,24 +14,25 @@ type memory = {
 class Player {
     public board: GameBoard = new GameBoard();
     private memory?: memory;
+    public readonly name: string = "Alvin";
+    public readonly isHuman: boolean = false;
+    public readonly difficulty?: "easy" | "medium" | "hard";
 
-    public constructor(
-        public readonly name: string = "Alvin",
-        public readonly isHuman: boolean = false,
-        public readonly difficulty: "easy" | "medium" | "hard" = "easy"
-    ) {
-        if (name === "" || typeof name !== "string") {
+    public constructor(params: Partial<Player> = {}) {
+        if (this.name === "" || typeof this.name !== "string") {
             throw new Error("Player name argument is invalid");
         }
 
+        Object.assign(this, params);
+
         // The instance is an AI, so we initialize its memory.
-        if (!isHuman) {
+        if (!this.isHuman) {
             this.memory = {
                 moveHistory: new Set<Number>(),
                 placementHistory: new Set<string>(),
                 hits: [],
                 targetQueue: [],
-                ...(difficulty === "hard"
+                ...(this.difficulty === "hard"
                     ? { hardModeGuesses: [] as NumberPair[] }
                     : {}),
             };
@@ -45,15 +48,12 @@ class Player {
 
                 this.memory.hardModeGuesses = shuffleArray(checkerboard);
             }
-
-            // Automatically generate a ship placement.
-            this.placeAllShips();
         }
     }
 
     /*
-    1.) rebuild ship unit html above the involved cells, position
-    2.) build a wrapper around involved cells, make that wrapper a ship__unit
+    1.) Rebuild ship unit html above the involved cells, position
+    2.) Build a wrapper around involved cells, make that wrapper a ship__unit
     and then do some magic shit
     */
     // Attempts to place a ship on the GameBoard. Returns a boolean indicating if it was successful.
@@ -104,6 +104,10 @@ class Player {
 
     // Returns the next coordinate that the AI will attack.
     private getAttack(): NumberPair {
+        console.log(
+            "getAttack() Current target queue:",
+            this.memory?.targetQueue
+        );
         let targetCoord: NumberPair;
 
         switch (this.difficulty) {
@@ -145,7 +149,7 @@ class Player {
                     this.memory?.moveHistory.has(this.coordToKey(targetCoord))
                 );
         }
-
+        console.log("getAttack() returning the coord:", targetCoord!);
         return targetCoord!;
     }
 
@@ -159,20 +163,25 @@ class Player {
             [0, -1],
             [-1, 0],
         ];
+        console.log("updateMemory() received attack result:", result);
         // Add the coordinate attacked to the move history.
         this.memory?.moveHistory.add(this.coordToKey(result.coords));
 
         // We had a valid hit, so add it to hits on target, and rebuild queue of cells to target.
         if (result.hit) {
+            console.log("Recognized as hit");
             this.memory?.hits.push(result.coords);
             this.memory!.targetQueue = [];
         }
 
         // Target sunk, clear the current hits on target.
         if (result.sunk) {
+            console.log("Recognized as sunk");
             this.memory!.hits = [];
             this.memory!.targetQueue = []; // Just to be safe ;)
         }
+
+        console.log("updateMemory() has hits memory of:", this.memory?.hits);
 
         // One hit on the ship, orientation not known, so add plus adjacent cells.
         if (this.memory?.hits.length == 1) {
@@ -186,6 +195,7 @@ class Player {
                     )
                 );
         } else if (this.memory?.hits.length! > 1) {
+            console.log("updateMemory() hits length is greater than 1");
             // Gauge the orientation of the current target ship.
             let [c1, c2] = [this.memory?.hits[0], this.memory?.hits[1]];
             orientation = c1![0] === c2![0] ? "vertical" : "horizontal";
@@ -196,50 +206,147 @@ class Player {
                 max: number = 0;
             let axis: number = orientation === "vertical" ? 1 : 0;
 
+            console.log("We recognize the ship to be", orientation);
+
             for (const coord of this.memory?.hits!) {
                 min = coord[axis]! < min ? coord[axis]! : min;
                 max = coord[axis]! > max ? coord[axis]! : max;
             }
+            console.log(
+                `We have a minimum value ${
+                    orientation == "vertical" ? "y" : "x"
+                } coordinate of ${min} and maximum of ${max}`
+            );
 
+            /* ISSUE HERE V WE DON'T APPEND ANY NEW ADJACENT COORDS, WE JUST KEEP THE SAME TWO ADJACENT ONES */
             // Filter possible candidate coordinates for ones that can exist on board.
             adjacentCoords = [
                 this.memory?.hits.find((coord) => coord[axis] === min)!,
                 this.memory?.hits.find((coord) => coord[axis] === max)!,
-            ].filter((coords) =>
+            ].map((coord) => {
+                if (axis == 0) {
+                    if (coord[axis] == min) {
+                        return [coord[axis] - 1, coord[1]];
+                    } else if (coord[axis] == max) {
+                        return [coord[axis] + 1, coord[1]];
+                    }
+                } else {
+                    if (coord[axis] == min) {
+                        return [coord[0], coord[axis] - 1];
+                    } else if (coord[axis] == max) {
+                        return [coord[0], coord[axis] + 1];
+                    }
+                }
+            }) as NumberPair[];
+
+            // let newAdjCoords = adjacentCoords.map((coord) => {
+            //     if (axis == 0) {
+            //         if (coord[axis] == min) {
+            //             return [coord[axis] - 1, coord[1]];
+            //         } else if (coord[axis] == max) {
+            //             return [coord[axis] + 1, coord[1]];
+            //         }
+            //     } else {
+            //         if (coord[axis] == min) {
+            //             return [coord[0], coord[axis] - 1];
+            //         } else if (coord[axis] == max) {
+            //             return [coord[0], coord[axis] + 1];
+            //         }
+            //     }
+            // }) as NumberPair[];
+
+            console.log(
+                "We have the following adjacentCoords:",
+                adjacentCoords
+            );
+
+            adjacentCoords.filter((coords) =>
                 coords.every((coord) => coord >= 0 && coord < this.board.size)
             );
-        }
 
+            console.log(
+                "The filtered adjacent coordinates to add are:",
+                adjacentCoords
+            );
+        }
+        console.log(
+            "updateMemory() movehistory before adding adjacent coords:",
+            this.memory?.moveHistory
+        );
         // All valid adjacent coords that haven't been tried yet get added.
         if (adjacentCoords.length > 0) {
             for (const coord of adjacentCoords) {
-                if (!this.memory?.moveHistory.has(this.coordToKey(coord)))
+                if (!this.memory?.moveHistory.has(this.coordToKey(coord))) {
                     this.memory?.targetQueue.push(coord);
+                    console.log("Adding ", coord);
+                }
             }
         }
     }
 
-    // Function for AI player to place ships onto the board.
-    private placeAllShips(): void {
-        let moveHash: string;
-        let coord: NumberPair;
-        let orientation: "horizontal" | "vertical";
-        let shipPlaced: boolean;
-
-        for (const ship of this.board.ships) {
-            shipPlaced = false;
-            do {
-                coord = [this.randInt(), this.randInt()];
-                orientation = this.randInt() >= 4 ? "horizontal" : "vertical";
-
-                // If we tried the placement, skip. Otherwise, add the move and attempt.
-                moveHash = String(this.coordToKey(coord) + orientation);
-                if (!this.memory?.placementHistory.has(moveHash)) {
-                    this.memory?.placementHistory.add(moveHash);
-                    shipPlaced = this.placeShip(ship.name, coord, orientation);
+    // Function to for player to place ships onto the board. Automatically places if AI.
+    public placeAllShips(): Promise<void> {
+        return new Promise((res) => {
+            if (this.isHuman) {
+                // Display the setup page.
+                displaySetupPage(this);
+                // Hydrate ship units for placement logic.
+                const shipUnits = Array.from(
+                    document.querySelectorAll(".ship__unit.--placeable")
+                ) as HTMLDivElement[];
+                for (const shipUnit of shipUnits) {
+                    shipUnit.addEventListener(
+                        "pointerdown",
+                        (e: PointerEvent) => {
+                            dragShip(e, this);
+                        }
+                    );
                 }
-            } while (!shipPlaced);
-        }
+                // Hydrate confirm button.
+                const confirmBtn = document.getElementById("confirm_btn");
+                if (confirmBtn) {
+                    confirmBtn.addEventListener("click", () => {
+                        if (true /*this.board.allShipsPlaced()*/) {
+                            /* CHANGE ME */
+                            res(undefined);
+                        } else {
+                            alert("All ships not placed");
+                            console.error(
+                                "Confirm error: All ships not placed"
+                            );
+                        }
+                    });
+                }
+            } else {
+                // console.log("AI ship placement");
+                // Logic to place all ships automatically for AI.
+                let moveHash: string;
+                let coord: NumberPair;
+                let orientation: "horizontal" | "vertical";
+                let shipPlaced: boolean;
+
+                for (const ship of this.board.ships) {
+                    shipPlaced = false;
+                    do {
+                        coord = [this.randInt(), this.randInt()];
+                        orientation =
+                            this.randInt() >= 4 ? "horizontal" : "vertical";
+
+                        // If we tried the placement, skip. Otherwise, add the move and attempt.
+                        moveHash = String(this.coordToKey(coord) + orientation);
+                        if (!this.memory?.placementHistory.has(moveHash)) {
+                            this.memory?.placementHistory.add(moveHash);
+                            shipPlaced = this.placeShip(
+                                ship.name,
+                                coord,
+                                orientation
+                            );
+                        }
+                    } while (!shipPlaced);
+                }
+                res(undefined);
+            }
+        });
     }
 
     // Returns a random integer in [min, max].

@@ -5,8 +5,8 @@ describe("Player test suite", () => {
     let p1: Player, p2: Player;
 
     beforeEach(() => {
-        p1 = new Player("p1", true, "easy");
-        p2 = new Player("p2", false, "medium");
+        p1 = new Player({ name: "p1", isHuman: true, difficulty: "easy" });
+        p2 = new Player({ name: "p2", isHuman: false, difficulty: "medium" });
     });
 
     test("constructor() returns accurate properties.", () => {
@@ -50,7 +50,11 @@ describe("Player test suite", () => {
     });
 
     test("AI attack easy mode output", () => {
-        let easy: Player = new Player("p", false, "easy");
+        let easy: Player = new Player({
+            name: "p",
+            isHuman: false,
+            difficulty: "easy",
+        });
         let ob: GameBoard = new GameBoard();
         ob.placeShip("destroyer", [2, 0], "horizontal");
 
@@ -62,7 +66,11 @@ describe("Player test suite", () => {
     });
 
     test("AI attack medium mode output", () => {
-        let med: Player = new Player("p", false, "medium");
+        let med: Player = new Player({
+            name: "p",
+            isHuman: false,
+            difficulty: "medium",
+        });
         let ob: GameBoard = new GameBoard();
         ob.placeShip("destroyer", [2, 0], "horizontal");
 
@@ -74,7 +82,11 @@ describe("Player test suite", () => {
     });
 
     test("AI attack hard mode output", () => {
-        let med: Player = new Player("p", false, "hard");
+        let med: Player = new Player({
+            name: "p",
+            isHuman: false,
+            difficulty: "hard",
+        });
         let ob: GameBoard = new GameBoard();
         ob.placeShip("destroyer", [2, 0], "horizontal");
 

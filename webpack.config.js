@@ -4,7 +4,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
-    entry: { index: "./src/index.ts", game: "./src/game.ts" },
+    entry: {
+        index: "./src/index.ts",
+        game: "./src/game.ts",
+    },
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "dist"),
@@ -15,11 +18,6 @@ module.exports = {
             template: "./src/index.html",
             filename: "index.html",
             chunks: ["index"],
-        }),
-        new HtmlWebpackPlugin({
-            template: "./src/game.html",
-            filename: "game.html",
-            chunks: ["game"],
         }),
         new MiniCssExtractPlugin(),
     ],
@@ -50,8 +48,8 @@ module.exports = {
     },
     devtool: "eval-source-map",
     devServer: {
-        open: ["game.html"],
-        watchFiles: ["./src/game.html", "./src/ts/*"],
+        open: ["index.html"],
+        watchFiles: ["./src/index.html", "./src/ts/*"],
     },
     experiments: {
         topLevelAwait: true,

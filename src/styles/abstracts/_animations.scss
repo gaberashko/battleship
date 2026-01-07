@@ -49,6 +49,34 @@
     }
 }
 
+@keyframes hitpulse {
+        0% {
+        filter: hue-rotate(-110deg) saturate(4) brightness(.7) drop-shadow($glow);
+    }
+
+    50% {
+        filter: hue-rotate(-110deg) saturate(4) brightness(.7) drop-shadow($glow);
+    }
+
+    100% {
+        filter: hue-rotate(-110deg) saturate(4) brightness(.7) drop-shadow($glow);
+    }
+}
+
+@keyframes sinkpulse {
+        0% {
+        filter: brightness(1.1) saturate(0) drop-shadow($glow);
+    }
+
+    50% {
+        filter: brightness(1.1) saturate(0) drop-shadow($glow);
+    }
+
+    100% {
+        filter: brightness(.8) saturate(0);
+    }
+}
+
 @keyframes blurpulse {
     from {
         filter: hue-rotate(-110deg) saturate(4) brightness(.4) blur(0px);
@@ -76,6 +104,16 @@
 
     to {
         filter: blur(1px) saturate(.2);
+    }
+}
+
+@keyframes roll {
+    from {
+        top: -50%;
+    }
+
+    to {
+        top: 200%;
     }
 }
 

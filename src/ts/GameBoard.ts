@@ -1,3 +1,4 @@
+import { AI_MODE } from "../index";
 import { Ship } from "./Ship";
 
 type NumberPair = [number, number];
@@ -31,10 +32,12 @@ class GameBoard {
     private shipPositions: Map<Ship, NumberPair[]> = new Map(); // Ship position data.
 
     // Default constructor; creates an empty board of cells.
-    public constructor() {
+    public constructor(params: Partial<GameBoard> = {}) {
         this.board = Array.from({ length: this.size }, () =>
             Array.from({ length: this.size }, () => ({ ...defaultCell }))
         );
+
+        Object.assign(this, params);
     }
 
     // Returns whether all ships on the board have been sunk.
@@ -42,6 +45,14 @@ class GameBoard {
         return Array.from(this.shipPositions.keys()).every((ship: Ship) =>
             ship.isSunk()
         );
+    }
+
+    // Returns whether all ships on the board have been placed.
+    public allShipsPlaced(): boolean {
+        const shipKeys = Array.from(this.shipPositions.keys());
+        // console.log("shipKeys:", shipKeys);
+        // console.log(this.ships.every((ship) => shipKeys.includes(ship)));
+        return this.ships.every((ship) => shipKeys.includes(ship));
     }
 
     // Places a ship on the board, if valid, at a specified starting position and orientation.
@@ -72,6 +83,7 @@ class GameBoard {
                 }
                 // Associate the ship with the array of coordinates it was placed at.
                 this.shipPositions.set(ship, coords);
+                console.log(this.shipPositions);
                 return true;
             } else {
                 // Potentially throw an error
@@ -107,6 +119,11 @@ class GameBoard {
     // Takes a pair of coordinates, and if a ship exists, calls hit on the ship.
     // Returns results of attack if successful, and null if unsuccessful.
     public receiveAttack(coords: NumberPair): attackResult | null {
+        /* remove this */
+        let gameMode = sessionStorage.getItem("mode");
+        if (gameMode == AI_MODE)
+            console.log("receiveAttack() received coords:", coords);
+
         if (this.coordsValid(coords)) {
             let targetCell: Cell = this.getCell(coords) as Cell;
             if (targetCell) {
@@ -131,6 +148,7 @@ class GameBoard {
                         }
                     }
                 }
+                console.log("at the end of receiveAttack, coords is", coords);
                 return {
                     hit: this.hasShip(targetCell),
                     sunk: targetCell.ship?.isSunk()!,

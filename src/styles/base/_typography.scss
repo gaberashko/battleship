@@ -45,7 +45,7 @@ h4 {
 }
 
 h5, legend {
-    @include responsive(font-size, (xs:$xsfnts, sm: $sfnts));
+    @include responsive(font-size, (xs:$xxsfnts, sm: $xsfnts, md: $sfnts));
 }
 
 p, li  {
@@ -61,5 +61,5 @@ u {
 }
 
 button {
-    @include responsive(font-size, (xs:$xsfnts, sm: $sfnts, md: $mfnts));
+    @include responsive(font-size, (xs:$xsfnts, sm: $xsfnts, md: $sfnts));
 }

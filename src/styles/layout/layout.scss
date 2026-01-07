@@ -17,4 +17,3 @@ header {
 section:not(:last-of-type) {
     @include responsive(margin-bottom, (xs: $spd))
 }
-

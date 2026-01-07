@@ -85,7 +85,7 @@
                 </button>
             </section>
         </main>
-        <div class="overlay" id="overlay">
+        <div class="overlay --hidden" id="overlay">
             <div class="overlay__modal --hidden" id="rules">
                 <div class="modal__header">
                     <h4>How to play:</h4>
@@ -136,13 +136,13 @@
                 </div>
             </div>
 
-            <div class="overlay__modal" id="start">
+            <div class="overlay__modal --hidden" id="start">
                 <div class="modal__header">
                     <h4>Prepare to fight:</h4>
                     <button id="modal__exit">X</button>
                 </div>
                 <div class="modal__body">
-                    <form action="" class="modal__form">
+                    <form class="modal__form" novalidate>
                         <div class="modal__input" id="player1">
                             <label for="input_name1">
                                 <h5><u>Player one's name</u>:</h5>
@@ -153,6 +153,8 @@
                                     name="name1"
                                     id="input_name1"
                                     autocomplete="off"
+                                    maxlength="16"
+                                    minlength="2"
                                 />
                             </div>
                         </div>
@@ -166,6 +168,8 @@
                                     name="name2"
                                     id="input_name2"
                                     autocomplete="off"
+                                    maxlength="16"
+                                    minlength="2"
                                 />
                             </div>
                         </div>
@@ -208,8 +212,92 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <button class="modal__button">Start</button>
+                        <button
+                            class="modal__button"
+                            id="modal__start_btn"
+                            type="submit"
+                        >
+                            Start
+                        </button>
                     </form>
+                </div>
+            </div>
+            <div class="overlay__modal --hidden" id="turn">
+                <div class="modal__header">
+                    <h4>Player_Name's turn</h4>
+                </div>
+                <br />> <br />>
+                <div class="modal__body --center">
+                    <h5>Pass the device to Player_Name</h5>
+                    <br />
+                    <p class="--console">...make this shot count!</p>
+                    <br />
+                    <button
+                        class="modal__button"
+                        id="modal__turn_btn"
+                        type="button"
+                    >
+                        Ready
+                    </button>
+                </div>
+            </div>
+            <div class="overlay__modal --hidden" id="win">
+                <div class="modal__header">
+                    <h4>Player_Name's has won!</h4>
+                </div>
+                <div class="modal__body --center">
+                    <pre>
+                  _,                         .,
+                jW#                          !#W,
+              .W##|        ._                 M##L
+             .W###  ._jmmm#@'     jmW#####WL_ !###;
+         .W| W###!j#######P        ~~*#######W,M###, #L
+        .W#| ###@d######@~            `Y#######!###| ##;
+        W##| ##f/*****~'                 ~*****t/M#| ###;
+       :###!.Km8mW###mL,                 _mm###WWG#| ###W
+    .; |### Z~*#########W,             :W########@fY,####,.L
+    dW |##P.!  .XX7~~~'                   ~~~~XXL   \/###'|#;
+   .##;`##/\m#######+                       4######WL`##@ ##b
+   |##b #KW#####@f'                          `YM######K(|:###
+   |### @~~**M~'                                 ~V**~~Y|d###
+   |### |.jm###@f                              `M###Wm, tV###
+ W;`##|/:#####f                                  `M####L`Z##f d|
+ ##,!#\G####*'                                     Y####W\#P d#|
+ ###,|W@**5Wm#f                                   MWm#**M#| j##|
+ ###W`| .m###!                                     M##WL  |j###|
+ |###;|.####!                                       M###W |####
+_ M##W'W###f_r                                     m/M###;|###! _
+#W/*#@d##*G##!                                     M#WZ###|#@'jWP
+###L`|P~ d##@                                      !##W,`Y#f.W##'
+|###W/| d###|                                       ####  @j###@
+ M###bt ###@.W!                                   |L!###;|:####!
+  M###d:##@\##                                    |#WV##|/W###'
+ _ ~*#b#@f ###                                    |##;`MWN#@f'_,
+ M#m_ ~M, |### d|                               W,|##W  8/ .j##
+ `M###m_5 |###:#b                              .#W|### :\jW###!
+  `M####L\|##@W##,                             d##!###:\#####!
+    Y####b|#@ ###|:W                        d|.###|!#bN####*'
+     `~**MW#! ####|#W                      j##|###! !P#**f'
+     mmL__/~~\d###|##W,|L              .W!j###|##@_/~~___mmr
+     `M#####W,\##||###b|##L          .W##:###P!##P.j######f
+       YM#####W/#  ####/###W,       j###P####! M5m######*'
+         `~**f~~Y+L`M##|!####;     W###@ ##@'_rf~~~**f'
+          ._mmmmmmmX=8#| `M##W    |###*' #5/(Gmmmmmm__
+           YM########mXb,  ~*#,   #@f'  _WWW########*'
+             `Y***#*f'_d####K8b  .W8#####_ ~*M@***~
+                  _jm#######@\/f~+(########Wm_
+                  ~**###@**~:'     \/Y*M###@*f'
+</pre
+                    >
+                    <br />
+                    <h5>Nice work, man.</h5>
+                    <button
+                        class="modal__button"
+                        id="modal__main_menu_btn"
+                        type="button"
+                    >
+                        Menu
+                    </button>
                 </div>
             </div>
         </div>

@@ -10,6 +10,18 @@ input {
     caret-color: transparent;
 }
 
+input:invalid, .input__wrapper:has(input:invalid)::after {
+    color:$danger--accentprim;
+    text-shadow: $danger--glow-color $glow;
+    border-color: $danger--accentprim !important;
+
+    &::selection {
+            color:$danger--accentsec;
+            text-shadow: $danger--glow-color--select $glow;
+    }
+}
+
+
 div:has(input:focus) > .input__wrapper {
     @extend %field_focus;
 }

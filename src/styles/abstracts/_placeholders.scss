@@ -115,7 +115,7 @@
                 @extend .--ship-x;
                 
                 &::after {
-                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/49% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
+                    background: url('../assets/images/ship-end.svg') 50% calc(100% + 2px)/50% 70% no-repeat, radial-gradient(ellipse at 50% 100%, rgba($accentprim, .27) 10%, transparent 60%) 100% 150% / 100% 100% no-repeat;
                 }
             }
 
@@ -136,6 +136,18 @@
                     transform:rotate(180deg);
                 }
             }
+        }
+
+        &-head {
+            @extend .--ship-x-head;
+        }
+
+        &-body {
+            @extend .--ship-x-body;
+        }
+
+        &-tail {
+            @extend .--ship-x-tail;
         }
     }
 }
