@@ -284,7 +284,7 @@ class Player {
         }
     }
 
-    // Function to for player the to place ships onto the board. Automatically places if AI.
+    // Function to for player to place ships onto the board. Automatically places if AI.
     public placeAllShips(): Promise<void> {
         return new Promise((res) => {
             if (this.isHuman) {
