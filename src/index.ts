@@ -375,7 +375,7 @@ function dragShip(e: PointerEvent, player: Player): void {
     // Remove the confirmation button if it exists.
     const confirmBtn = document.getElementById("confirm_btn");
     if (confirmBtn) {
-        //confirmBtn.style.visibility = "hidden"; //CHANGE ME
+        confirmBtn.style.visibility = "hidden";
     }
 
     // Get the ship unit element, and the index of the specific segment of the ship.

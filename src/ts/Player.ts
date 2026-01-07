@@ -306,8 +306,7 @@ class Player {
                 const confirmBtn = document.getElementById("confirm_btn");
                 if (confirmBtn) {
                     confirmBtn.addEventListener("click", () => {
-                        if (true /*this.board.allShipsPlaced()*/) {
-                            /* CHANGE ME */
+                        if (this.board.allShipsPlaced()) {
                             res(undefined);
                         } else {
                             alert("All ships not placed");
