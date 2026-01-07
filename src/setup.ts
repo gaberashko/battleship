@@ -271,6 +271,7 @@ const displaySetupPage = (player: Player) => {
                         tabindex="0"
                     ></div>
                 </div>
+                <p style="width: 30ch">Press "r" key while dragging a ship to rotate</p>
             </div>`;
 };
 
